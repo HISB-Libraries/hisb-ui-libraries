@@ -4,6 +4,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "strictNullChecks": false,
+    "noImplicitAny": false,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
@@ -11,6 +13,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
+    "strictPropertyInitialization": false,
     "paths": {
       "ngx-fhir-validator": [
         "dist/ngx-fhir-validator"
@@ -18,9 +21,6 @@
       "ngx-hisb-logger": [
         "dist/ngx-hisb-logger"
       ],
-      "ngx-lib-logger": [
-        "dist/ngx-lib-logger"
-      ]
     },
     "declaration": false,
     "downlevelIteration": true,

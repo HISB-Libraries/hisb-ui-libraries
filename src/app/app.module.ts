@@ -4,8 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {NgxHisbLoggerModule} from "ngx-hisb-logger";
-import {NgxFhirValidatorModule} from "ngx-fhir-validator";
+import {NgxHisbLoggerModule} from "../../projects/ngx-hisb-logger/src/lib/ngx-hisb-logger.module";
+import {NgxFhirValidatorModule} from "../../projects/ngx-fhir-validator/src/lib/ngx-fhir-validator.module";
+
 
 @NgModule({
   declarations: [

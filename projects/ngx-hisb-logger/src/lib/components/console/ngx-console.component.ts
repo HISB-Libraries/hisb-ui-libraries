@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from 
 import {LogLine} from "../../modal/log-line";
 
 @Component({
-  selector: 'lib-console',
+  selector: 'ngx-console',
   templateUrl: './ngx-console.component.html',
   styleUrls: ['./ngx-console.component.css']
 })
