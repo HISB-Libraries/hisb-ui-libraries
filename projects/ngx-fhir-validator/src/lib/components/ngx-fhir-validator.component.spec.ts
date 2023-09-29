@@ -6,10 +6,12 @@ describe('NgxFhirValidatorComponent', () => {
   let component: NgxFhirValidatorComponent;
   let fixture: ComponentFixture<NgxFhirValidatorComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [NgxFhirValidatorComponent]
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ NgxFhirValidatorComponent ]
+    })
+    .compileComponents();
+
     fixture = TestBed.createComponent(NgxFhirValidatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

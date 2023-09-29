@@ -11,7 +11,7 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "useDefineForClassFields": false
-  },
+},
   "exclude": [
     "**/*.spec.ts"
   ]
