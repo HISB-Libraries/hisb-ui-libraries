@@ -7,7 +7,7 @@ import {LogLine} from "../../modal/log-line";
   styleUrls: ['./ngx-console.component.css']
 })
 export class NgxConsoleComponent implements OnChanges{
-  @ViewChild('terminal') private myScrollContainer: ElementRef
+  @ViewChild('terminal') private myScrollContainer: ElementRef;
   @Input() logs: LogLine[] = [];
 
   scrollToElement(): void {
