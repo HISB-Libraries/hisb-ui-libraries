@@ -2,3 +2,63 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.container {
+  margin: auto;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.row {
+  @extend .flex; flex-direction: row;
+}
+
+.col {
+  flex: 1;        /* distributes space on the line equally among items */
+}
+
+/* Margins and Paddings */
+$xs: 4px;
+$sm: 8px;
+$md: 16px;
+$lg: 24px;
+.margin-sm { margin: $sm; }
+.margin-md { margin: $md; }
+.margin-lg { margin: $lg; }
+.padding-xs { padding: $xs; }
+.padding-sm { padding: $sm; }
+.padding-md { padding: $md; }
+.padding-lg { padding: $lg; }
+// Add more of the following as needed.
+.margin-bottom-xs { margin-bottom: $xs; }
+.margin-bottom-sm { margin-bottom: $sm; }
+.margin-bottom-md { margin-bottom: $md; }
+.margin-top-xs { margin-top: $xs; }
+.margin-top-sm { margin-top: $sm; }
+.margin-top-md { margin-top: $md; }
+.margin-left-md { margin-left: $md; }
+.margin-right-md { margin-right: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-top-md { padding-top: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-left-md { padding-left: $md; }
+.padding-right-md { padding-right: $md; }
+.border-radius-xs { border-radius: $xs; }
