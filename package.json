@@ -1,5 +1,5 @@
 {
-  "name": "hisb-common-ui",
+  "name": "hisb-ui-library-workspace",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build-all": "ng build ngx-hisb-logger && ng build ngx-fhir-validator"
+    "build-all": "ng build ngx-hisb-logger && ng build ngx-fhir-validator && ng build common-ui"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "common-ui": "file:dist/common-ui",
     "ngx-fhir-validator": "file:dist/ngx-fhir-validator",
     "ngx-hisb-logger": "file:dist/ngx-hisb-logger",
     "rxjs": "~7.8.0",

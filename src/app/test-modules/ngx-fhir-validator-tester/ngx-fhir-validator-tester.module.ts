@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FhirValidatorTesterComponent } from './components/fhir-validator-tester/fhir-validator-tester.component';
 import {MatCardModule} from "@angular/material/card";
-import {NgxFhirValidatorModule} from "../../../projects/ngx-fhir-validator/src/lib/ngx-fhir-validator.module";
+import {NgxFhirValidatorModule} from "../../../../projects/ngx-fhir-validator/src/lib/ngx-fhir-validator.module";
 
 @NgModule({
   declarations: [

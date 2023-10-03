@@ -15,6 +15,9 @@
     "sourceMap": true,
     "strictPropertyInitialization": false,
     "paths": {
+      "common-ui": [
+        "dist/common-ui"
+      ],
       "ngx-fhir-validator": [
         "dist/ngx-fhir-validator"
       ],

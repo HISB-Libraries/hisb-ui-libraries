@@ -1,0 +1,56 @@
+<mat-toolbar class="header">
+
+  <mat-toolbar-row [style.background-color]="backgroundColor">
+    <div class="title" [routerLink]="'/'" [style.cursor]="'pointer'">{{ title }}</div>
+
+    <div class="subtitle">
+      <p [innerHTML]="subtitleInsert">
+      </p>
+    </div>
+
+    <div class="content-spacer"></div>
+    <div class="version-label" *ngIf="version">
+      Version: {{ version }}
+    </div>
+    <div *ngIf="configuration?.menuItem">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+    <div>
+      <button mat-icon-button aria-label="User Management" *ngIf="showUserManagement">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+
+  <mat-menu #menu="matMenu">
+    <div *ngFor="let item of configuration?.menuItem">
+      <mat-divider *ngIf="item.divider"></mat-divider>
+      <button mat-menu-item *ngIf="!item.divider" (click)="openLink(item.link)">
+        <span>{{ item.label }}</span>
+      </button>
+    </div>
+  </mat-menu>
+</mat-toolbar>
+
+
+
+<!--&lt;!&ndash; Add links to major features as they are implemented here. &ndash;&gt;-->
+
+
+
+
+<!--<mat-menu #menu="matMenu">-->
+<!--  <button mat-menu-item onclick="window.open('https://ravendocs.readthedocs.io/en/latest/','_blank')">-->
+<!--    <span>Documentation</span>-->
+<!--  </button>-->
+<!--  <button mat-menu-item onclick="window.open('https://github.com/MortalityReporting','_blank')">-->
+<!--    <span>Mortality Reporting GitHub</span>-->
+<!--  </button>-->
+<!--  <mat-divider></mat-divider>-->
+<!--  <button mat-menu-item onclick="window.open('https://chat.fhir.org','_blank')">-->
+<!--    <span>FHIR Zulip Chat</span>-->
+<!--  </button>-->
+<!--</mat-menu>-->
+

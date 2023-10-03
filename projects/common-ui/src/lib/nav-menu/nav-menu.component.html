@@ -1,0 +1,29 @@
+<div class="menu-wrapper" [style.background-color]="backgroundColor" [style.width]="expanded ? '100px' : '50px'">
+  <mat-toolbar color=primary>
+    <mat-toolbar-row [style.background-color]="backgroundColor" [style.padding]="'0 0 0 0'">
+      <div class="menu-button-wrapper">
+        <button mat-icon-button aria-label="Menu" (click)="toggleSize()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="vertical-spacer"></div>
+
+  <div class="option-wrapper"
+       *ngFor="let item of options.options; let i = index"
+       [style.background-color]="i === selectedOption ? contrastColor : backgroundColor "
+       [style.color]="i === selectedOption ?  backgroundColor : contrastColor"
+       (click)="select(i)"
+       matTooltip="{{item.label}}"
+       matTooltipPosition="after"
+       [matTooltipDisabled]="expanded"
+       [routerLink]="item.routerLink"
+  >
+    <mat-icon [class]="expanded? 'scaled-icon' : 'small-icon'" svgIcon="{{item.iconName}}">
+    </mat-icon>
+    <br>
+    <span *ngIf="expanded" class="icon-label-large">{{item.label}}</span>
+  </div>
+</div>

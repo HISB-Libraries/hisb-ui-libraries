@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./logger-tester.component.scss']
 })
 export class LoggerTesterComponent {
-
 }
