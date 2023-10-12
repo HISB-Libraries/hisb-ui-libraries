@@ -27,10 +27,14 @@ textarea {
   width: 36px;
   line-height: 16px;
   padding-top: 3px;
-  height: 50vh;
+  height: 50.2vh;
   overflow: hidden;
   background: rgba(0,0,0, 0.1);
   border-radius: 3px;
+}
+
+.box{
+  display: flex;
 }
 
 .line-numbers-response {
@@ -41,7 +45,7 @@ textarea {
   width: 36px;
   line-height: 16px;
   overflow: hidden;
-  background: rgba(0,0,0, 0.1);
+  background: #E8E8E8;
   border-radius: 3px;
 }
 
@@ -270,11 +274,22 @@ mat-button-toggle{
   padding-top: 16px;
 }
 
-.right-margin-md{
+.right-margin-md {
   margin-right: 16px;
 }
+
+.left-margin-md {
+  margin-left: 16px;
+}
+
 
 .line-item {
   margin: 0;
   white-space: pre;
+}
+
+.right-aligned {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }

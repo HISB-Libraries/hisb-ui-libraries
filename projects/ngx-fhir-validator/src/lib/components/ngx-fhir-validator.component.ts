@@ -38,19 +38,22 @@ export class NgxFhirValidatorComponent {
   @Input() formatResourceBtnShown: boolean = false; // Show/hide Format Resource btn
   @Input() clearValidatorBtnShown: boolean = true; // Show/hide Clear Validator btn
   @Input() submitBtnShown: boolean = true; // Show/hide Submit btn
-  @Input() exportToPdfButtonShown = false;
+  @Input() exportResultsButtonShown = true;
   @Input() submitBtnTitle: string = 'Submit'; //The submit button title. "Submit" is generic name and other apps may want to change it
   @Input() validationInputFormat: ValidatorInput = {format: 'json', accepts: '.json'};
   @Input() maxFileSize = 250000 // Max allowed file size is 250KB
   @Input() submitBtnAlignment: SubmitButtonAlignment = 'right'; // The default location for the Submit btn
   @Input() cancelValidationBtnShown: boolean = true;
   @Input() buttonTxtColor: string  = 'white';
-  @Input() buttonBackgroundColor='#4858B8'
+  @Input() buttonBackgroundColor='#4858B8';
+  @Input() exportValidationResultsBtnVisible= false;
+  @Input() exportValidationResultsBtnName: string = 'Export Results (.zip)';
 
   @Output() onValidation = new EventEmitter<ValidationResults>();
   @Output() onApiError = new EventEmitter<any>();
   @Output() onResourceContentChanged = new EventEmitter<any>();
-  @Output() onExportToPdfEvent = new EventEmitter<any>();
+  @Output() onExportValidationResults = new EventEmitter<any>();
+
 
   @ViewChild('validatorInput',{static:false, read: ElementRef}) inputRef: any;
 
@@ -262,7 +265,7 @@ export class NgxFhirValidatorComponent {
       fhirResource = fhirResourceXML.documentElement.outerHTML;
     }
 
-   this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat)
+    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat)
       .subscribe({
         next: (response) => {
           this.validationFinished = true;
@@ -439,17 +442,17 @@ export class NgxFhirValidatorComponent {
     else return'';
   }
 
-  getFormat() {
-    return this.validationInputFormat.accepts.toString();
+
+  exportValidationResults() {
+    // Add the formatted resource form the validator response to a json file
+    // This way the line numbers from the validator report will match the json file numbers
+    const jsonResource = this?.apiResponse?.formattedResource || '';
+    // Create a pdf report
+    const resultsData = this.dataSource.data
+      .map(element=> { return {severity: element.severity, diagnostics: element.diagnostics, location: element.location, fhirPath: element?.expression?.[0]}})
+      .filter(item => this.severityLevelsFormControl.value.indexOf(item.severity) != -1);
+    this.onExportValidationResults.emit({jsonResource: jsonResource, resultsData: resultsData});
   }
 
-  protected readonly Array = Array;
-  protected readonly console = console;
 
-  onExportToPdf() {
-    const data =this.dataSource.data
-      .sort((a, b) => a.severity.localeCompare(b.severity))
-      .map(element=> { return {severity: element.severity, diagnostics: element.diagnostics, location: element.location}});
-    this.onExportToPdfEvent.emit(data);
-  }
 }

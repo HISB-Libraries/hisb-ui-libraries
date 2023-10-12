@@ -6,6 +6,7 @@
   <mat-card-title>{{ validatorTitle }}</mat-card-title>
 </mat-card-header>
 
+
 <!-- The section below renders error messages returned by the validator.-->
 <div class=server-error-message-container *ngIf="serverErrorDetected">
   <button mat-button class="close-button" color="accent" aria-label="Close" disableRipple
@@ -54,12 +55,6 @@
 
   <span class="filename" *ngIf="validationInputFormat.format == 'xml and json'">{{fileName}}</span>
 
-  <button mat-raised-button class="right-margin-md" (click)="onExportToPdf()" *ngIf="exportToPdfButtonShown"
-          [disabled]="!(dataSource?.data?.length>0)">
-    <mat-icon>picture_as_pdf</mat-icon>
-    Export to PDF
-  </button>
-
   <button mat-raised-button [style.background-color]="buttonBackgroundColor" [style.color]="buttonTxtColor"
           class="upload-btn"
           (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
@@ -72,20 +67,20 @@
 
 <!-- FHIR validator text editor-->
 <div class="textarea-wrapper">
-      <div class="line-numbers" #numbers>
-        <div *ngFor="let i of getLineNumbers();"><div class="numbers">{{i}}</div></div>
-      </div>
-      <textarea
-        #validatorInput
-        rows="30"
-        [(ngModel)]="fhirResource"
-        (ngModelChange)="onResourceContentChanged.emit(fhirResource)"
-        [ngStyle]="{'border-color': (!!validationErrorStr) ? 'red': null }"
-        (paste)="onPasteFhirResource($event)"
-        [disabled]="isLoading"
-        (input)="lineNumbers()"
-        (scroll)="numbers.scrollTop = validatorInput.scrollTop"
-      >
+  <div class="line-numbers" #numbers>
+    <div *ngFor="let i of getLineNumbers();"><div class="numbers">{{i}}</div></div>
+  </div>
+  <textarea
+    #validatorInput
+    rows="30"
+    [(ngModel)]="fhirResource"
+    (ngModelChange)="onResourceContentChanged.emit(fhirResource)"
+    [ngStyle]="{'border-color': (!!validationErrorStr) ? 'red': null }"
+    (paste)="onPasteFhirResource($event)"
+    [disabled]="isLoading"
+    (input)="lineNumbers()"
+    (scroll)="numbers.scrollTop = validatorInput.scrollTop"
+  >
       </textarea>
 </div>
 
@@ -117,8 +112,8 @@
   <span class="content-spacer"></span>
 
   <button *ngIf="clearValidatorBtnShown && !isLoading"
-    mat-raised-button color="success" class="button"
-    (click)="onClear()">
+          mat-raised-button color="success" class="button"
+          (click)="onClear()">
     <mat-icon>clear</mat-icon>
     Clear Validator
   </button>
@@ -148,7 +143,6 @@
     <div (click)="onFilterResults()">
       <mat-button-toggle-group name="severity level filter" [formControl]="severityLevelsFormControl"
                                aria-label="severity level filter" multiple class="full-width">
-
         <mat-button-toggle
           id="format-toggle-buttons"
           *ngFor="let level of severityLevels"
@@ -177,17 +171,31 @@
       </mat-button-toggle-group>
     </div>
 
-    <div class="top-padding" *ngIf="validationResultsExpanded">
+    <div class="top-padding box" *ngIf="validationResultsExpanded">
       <button mat-raised-button color=primary *ngIf="!resultDetailsExpandBtnShown" (click)="resultDetailsExpandBtnShown = true">
         <mat-icon>expand_more</mat-icon> Expand Validation Results
       </button>
       <button mat-raised-button color=primary *ngIf="resultDetailsExpandBtnShown" (click)="resultDetailsExpandBtnShown = false">
         <mat-icon>expand_less</mat-icon> Collapse Validation Results
       </button>
+      <span class="content-spacer"></span>
+      <button mat-raised-button (click)="exportValidationResults()" *ngIf="exportResultsButtonShown"
+              [disabled]="!(dataSource?.data?.length>0)">
+        <mat-icon>folder_zip</mat-icon>
+        {{exportValidationResultsBtnName}}
+      </button>
     </div>
 
     <div *ngIf="severityLevelsFormControl?.value?.length === 0">
       Please select severity level to see the result.
+    </div>
+
+    <div class="top-padding box" *ngIf="(!validationResultsExpanded) && exportResultsButtonShown">
+      <button mat-stroked-button (click)="exportValidationResults()"
+              [disabled]="!(dataSource?.data?.length>0)" class="left-margin-md">
+        <mat-icon>folder_zip</mat-icon>
+        {{exportValidationResultsBtnName}}
+      </button>
     </div>
 
     <table
