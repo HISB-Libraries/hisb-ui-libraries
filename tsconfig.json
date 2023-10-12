@@ -15,11 +15,11 @@
     "sourceMap": true,
     "strictPropertyInitialization": false,
     "paths": {
-      "common-ui": [
-        "dist/common-ui"
-      ],
       "ngx-fhir-validator": [
         "dist/ngx-fhir-validator"
+      ],
+      "ngx-hisb-common-ui": [
+        "dist/ngx-hisb-common-ui"
       ],
       "ngx-hisb-logger": [
         "dist/ngx-hisb-logger"

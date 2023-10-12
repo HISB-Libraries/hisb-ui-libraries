@@ -6,19 +6,20 @@ import {MatDividerModule} from "@angular/material/divider";
 import {NgIf} from "@angular/common";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
+
 @NgModule({
   declarations: [
   ],
-    imports: [
-        MatIconModule,
-        MatToolbarModule,
-        RouterLink,
-        MatDividerModule,
-        NgIf,
-        BrowserAnimationsModule,
-    ],
+  imports: [
+    MatIconModule,
+    MatToolbarModule,
+    RouterLink,
+    MatDividerModule,
+    NgIf,
+    BrowserAnimationsModule,
+  ],
   exports: [
 
   ]
 })
-export class CommonUiModule { }
+export class NgxHisbCommonUiModule { }

@@ -1,8 +1,8 @@
 /*
- * Public API Surface of common-ui
+ * Public API Surface of ngx-hisb-common-ui
  */
 
-export * from './lib/common-ui.module';
+export * from './lib/ngx-hisb-common-ui.module';
 export * from './lib/header/header.config';
 export * from './lib/header/header.component';
 export * from './lib/nav-menu/option.config';

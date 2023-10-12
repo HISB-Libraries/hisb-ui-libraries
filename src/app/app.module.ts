@@ -11,7 +11,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import { HeaderComponent } from './components/header/header.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import {CommonUiTesterModule} from "./test-modules/common-ui-tester/common-ui-tester.module";
+import {NgxHisbCommonUiTesterModule} from "./test-modules/ngx-hisb-common-ui-tester/ngx-hisb-common-ui-tester.module";
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import {CommonUiTesterModule} from "./test-modules/common-ui-tester/common-ui-te
     HisbLoggerTesterModule,
     MatToolbarModule,
     MatIconModule,
-    CommonUiTesterModule
+    NgxHisbCommonUiTesterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

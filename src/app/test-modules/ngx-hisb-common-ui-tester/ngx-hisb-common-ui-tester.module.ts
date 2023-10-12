@@ -1,21 +1,24 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DialogTesterComponent } from './components/dialog-tester/dialog-tester.component';
-import {CommonUiModule} from "common-ui";
+import {NgxHisbCommonUiModule} from "ngx-hisb-common-ui";
 import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
+import {CommonModule} from "@angular/common";
 import {MatDialogModule} from "@angular/material/dialog";
-
-
 
 @NgModule({
   declarations: [
     DialogTesterComponent
   ],
+  exports:[
+    DialogTesterComponent
+  ],
   imports: [
     CommonModule,
-    CommonUiModule,
+    NgxHisbCommonUiModule,
     MatButtonModule,
+    MatCardModule,
     MatDialogModule
   ]
 })
-export class CommonUiTesterModule { }
+export class NgxHisbCommonUiTesterModule { }
