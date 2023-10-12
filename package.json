@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build-all": "ng build ngx-hisb-logger && ng build ngx-fhir-validator && ng build common-ui"
+    "build:all": "ng build ngx-hisb-logger && ng build ngx-fhir-validator && ng build ngx-hisb-common-ui"
   },
   "private": true,
   "dependencies": {
