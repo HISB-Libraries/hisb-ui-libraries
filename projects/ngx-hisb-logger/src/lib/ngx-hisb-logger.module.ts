@@ -17,7 +17,7 @@ import {BrowserModule} from "@angular/platform-browser";
     BrowserModule
   ],
   exports: [
-    NgxConsoleComponent
+    NgxConsoleComponent,
   ],
   providers: [
    LoggerService

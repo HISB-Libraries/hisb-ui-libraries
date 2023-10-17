@@ -1,27 +1,20 @@
 # HisbCommonUi
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
+The project contains UI libraries used by HISB
 
-## Development server
+## Install The project.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. As with all angular projects, run [npm -install]
+2. Build all libraries. You can use [npm run build:all], or use [ng build library_name]
+3. Reinstall all dependencies using [npm -install] (remember that the libraries are dependencies)
+4. For the library you are currently working on run [ng build library_name --watch]. This will insure that the library you are working on will update every time you make changes.
+5. Run the main project using [npm start]
 
-## Code scaffolding
+## Create New Library
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Run [ng generate library my-lib]. Remember to follow proper naming conventions.
+2. Follow the [Angular guidance](https://angular.io/guide/creating-libraries) for creating new libraries. 
+3. In the main project, create a test module for the library. All modules are located in [src/app/test-modules]
+4. Make sure to import the library in [my_test_module.module.ts] file.
+5. Make sure to add a path in the[ ]app-routing.module.ts] to access your library

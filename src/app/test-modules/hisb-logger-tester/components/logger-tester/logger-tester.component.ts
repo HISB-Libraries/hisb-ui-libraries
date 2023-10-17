@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {LogLine} from "ngx-hisb-logger";
 
 @Component({
   selector: 'app-logger-tester',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./logger-tester.component.scss']
 })
 export class LoggerTesterComponent {
+
+  loggerData: LogLine[];
 }
