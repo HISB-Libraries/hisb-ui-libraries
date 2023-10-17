@@ -3,7 +3,7 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
 The project contains UI libraries used by HISB
 
-## Install the project.
+## Installation.
 
 1. As with all angular projects, run `npm -install`
 2. Build all libraries. You can use `npm run build:all`, or use `ng build library_name`
