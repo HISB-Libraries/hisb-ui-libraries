@@ -3,7 +3,7 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
 The project contains UI libraries used by HISB
 
-## Install The project.
+## Install the project.
 
 1. As with all angular projects, run `npm -install`
 2. Build all libraries. You can use `npm run build:all`, or use `ng build library_name`
@@ -11,7 +11,7 @@ The project contains UI libraries used by HISB
 4. For the library you are currently working on run [ng build library_name --watch]. This will insure that the library you are working on will update every time you make changes.
 5. Run the main project using `npm start`
 
-## Create New Library
+## Create new library
 
 1. Run [ng generate library my-lib]. Remember to follow proper naming conventions.
 2. Follow the [Angular guidance](https://angular.io/guide/creating-libraries) for creating new libraries. 
