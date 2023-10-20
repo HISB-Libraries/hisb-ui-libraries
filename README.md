@@ -8,7 +8,7 @@ The project contains UI libraries used by HISB
 1. As with all angular projects, run `npm -install`
 2. Build all libraries. You can use `npm run build:all`, or use `ng build library_name`
 3. Reinstall all dependencies using `npm -install` (remember that the libraries are dependencies)
-4. For the library you are currently working on run [ng build library_name --watch]. This will insure that the library you are working on will update every time you make changes.
+4. For the library you are currently working on run [ng build library_name --watch]. This will ensure that the library you are working on will update every time you make changes.
 5. Run the main project using `npm start`
 
 ## Create new library
