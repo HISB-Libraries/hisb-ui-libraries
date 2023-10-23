@@ -9,4 +9,6 @@ import {LogLine} from "ngx-hisb-logger";
 export class LoggerTesterComponent {
 
   loggerData: LogLine[];
+
+
 }

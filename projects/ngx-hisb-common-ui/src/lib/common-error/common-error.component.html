@@ -1,0 +1,8 @@
+
+<div class="box">
+  <div class="error-code" *ngIf="errorCode">Error Code: {{ errorCode }}</div>
+  <div class="error-message">{{ errorMessage }}</div>
+  <div class="action-button">
+    <button mat-raised-button (click)="onBtnClick()">{{ buttonName }}</button>
+  </div>
+</div>

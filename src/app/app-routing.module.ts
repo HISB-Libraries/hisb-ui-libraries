@@ -6,6 +6,9 @@ import {
   FhirValidatorTesterComponent
 } from "./test-modules/ngx-fhir-validator-tester/components/fhir-validator-tester/fhir-validator-tester.component";
 import {DialogTesterComponent} from "./test-modules/ngx-hisb-common-ui-tester/components/dialog-tester/dialog-tester.component";
+import {
+  CommonErrorTesterComponent
+} from "./test-modules/ngx-hisb-common-ui-tester/components/common-error-tester/common-error-tester.component";
 
 const routes: Routes = [
   {
@@ -23,6 +26,10 @@ const routes: Routes = [
   {
     path: 'dialog',
     component: DialogTesterComponent,
+  },
+  {
+    path: 'common-error',
+    component: CommonErrorTesterComponent,
   },
 ];
 

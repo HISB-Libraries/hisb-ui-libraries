@@ -5,11 +5,10 @@ import {RouterLink} from "@angular/router";
 import {MatDividerModule} from "@angular/material/divider";
 import {NgIf} from "@angular/common";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
-  declarations: [
-  ],
   imports: [
     MatIconModule,
     MatToolbarModule,
@@ -17,9 +16,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatDividerModule,
     NgIf,
     BrowserAnimationsModule,
+    MatButtonModule,
   ],
-  exports: [
-
-  ]
 })
 export class NgxHisbCommonUiModule { }

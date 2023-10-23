@@ -11,3 +11,4 @@ export * from './lib/dialog/confirmation-dialog/conformation-dialog.component';
 export * from './lib/dialog/text-input-dialog/text-input-dialog.component';
 export * from './lib/dialog/domain/dialog-data';
 export * from './lib/dialog/domain/text-input-dialog-data';
+export * from './lib/common-error/common-error.component';
