@@ -1,7 +1,15 @@
 <div class="container">
   <mat-card class="margin-lg">
     <mat-card-content>
-      <lib-ngx-fhir-validator></lib-ngx-fhir-validator>
+      <lib-ngx-fhir-validator
+        [validatorTitle]="'FHIR Validator'"
+        [validationInputFormat]="validationTextFormat"
+        [formatResourceBtnShown]="true"
+        [buttonTxtColor]="'white'"
+        (onExportValidationResults)="onExportValidationResults($event)"
+        [exportValidationResultsBtnName]="'Export Results (.zip)'"
+        [exportValidationResultsBtnVisible]="true"
+      ></lib-ngx-fhir-validator>
     </mat-card-content>
   </mat-card>
 </div>
