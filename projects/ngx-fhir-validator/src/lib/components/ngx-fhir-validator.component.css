@@ -282,6 +282,17 @@ mat-button-toggle{
   margin-left: 16px;
 }
 
+.top-margin-md{
+  margin-top: 16px;
+}
+
+.bottom-margin-md{
+  margin-bottom: 16px;
+}
+
+.margin-md {
+  margin: 16px 16px 16px 16px;
+}
 
 .line-item {
   margin: 0;

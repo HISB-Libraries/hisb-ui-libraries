@@ -179,7 +179,7 @@
         <mat-icon>expand_less</mat-icon> Collapse Validation Results
       </button>
       <span class="content-spacer"></span>
-      <button mat-raised-button (click)="exportValidationResults()" *ngIf="exportResultsButtonShown"
+      <button mat-raised-button (click)="exportValidationResults()" *ngIf="exportResultsButtonShown" color="accent"
               [disabled]="!(dataSource?.data?.length>0)">
         <mat-icon>folder_zip</mat-icon>
         {{exportValidationResultsBtnName}}
@@ -190,8 +190,8 @@
       Please select severity level to see the result.
     </div>
 
-    <div class="top-padding box" *ngIf="(!validationResultsExpanded) && exportResultsButtonShown">
-      <button mat-stroked-button (click)="exportValidationResults()"
+    <div class="top-padding box margin-bottom-md" *ngIf="(!validationResultsExpanded) && exportResultsButtonShown">
+      <button mat-raised-button (click)="exportValidationResults()" color="accent"
               [disabled]="!(dataSource?.data?.length>0)" class="left-margin-md">
         <mat-icon>folder_zip</mat-icon>
         {{exportValidationResultsBtnName}}
