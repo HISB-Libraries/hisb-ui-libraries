@@ -152,17 +152,25 @@ export class FhirValidatorService {
 
       headers = new HttpHeaders()
         .set('Content-Type', 'application/fhir+json');
-    } else if (resourceFormat === 'xml') {
+    }
+    else if (resourceFormat === 'xml') {
 
       requestData =
-        `<?xml version="1.0" encoding="UTF-8"?>
-      <Parameters xmlns="http://hl7.org/fhir">
-        <parameter>
-          <name value="ig" />
-          <valueString value="hl7.fhir.us.mdi#current" />
-        </parameter>
-        <parameter>
-          <name value="resource" />
+        `<Parameters xmlns="http://hl7.org/fhir">
+          <parameter>
+            <name value="ig"/>
+            <valueString value="hl7.fhir.us.mdi#1.0.0"/>
+          </parameter>
+          <parameter>
+            <name value="format"/>
+            <valueString value="application/fhir+xml"/>
+          </parameter>
+          <parameter>
+            <name value="includeFormattedResource"/>
+            <valueBoolean value="true"/>
+          </parameter>
+          <parameter>
+            <name value="resource" />
             <resource>
               ${fhirResource}
             </resource>
