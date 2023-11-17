@@ -4,7 +4,6 @@ import { LoggerTesterComponent } from './components/logger-tester/logger-tester.
 import { NgxHisbLoggerModule } from 'ngx-hisb-logger';
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
-import {LoggerService} from "../../../../projects/ngx-hisb-logger/src/lib/services/logger.service";
 
 @NgModule({
   declarations: [
@@ -19,8 +18,5 @@ import {LoggerService} from "../../../../projects/ngx-hisb-logger/src/lib/servic
     MatButtonModule,
     MatCardModule,
   ],
-  providers: [
-    LoggerService
-  ]
 })
 export class HisbLoggerTesterModule { }

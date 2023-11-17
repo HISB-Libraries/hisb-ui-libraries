@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {LogLine} from "ngx-hisb-logger";
-import {LoggerService} from "../../../../../../projects/ngx-hisb-logger/src/lib/services/logger.service";
+import {LogLine, LoggerService} from "ngx-hisb-logger";
+
 
 @Component({
   selector: 'app-logger-tester',
