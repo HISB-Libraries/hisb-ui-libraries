@@ -2,7 +2,13 @@
   <mat-card class="margin-lg">
     <mat-card-content>
       <ngx-console [logs]="loggerData"></ngx-console>
-      <button mat-raised-button>Test button</button>
+      <div class="content-spacer margin-top-md">
+        <button mat-raised-button class="margin-right-md" (click)="onClear()">Clear</button>
+        <button mat-raised-button class="margin-right-md" (click)="onDebug()">Test Debug</button>
+        <button mat-raised-button class="margin-right-md" (click)="onInfo()">Test Info</button>
+        <button mat-raised-button class="margin-right-md" (click)="onWarn()">Test Warn</button>
+        <button mat-raised-button (click)="onError()">Test Error</button>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>
