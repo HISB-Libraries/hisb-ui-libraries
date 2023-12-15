@@ -11,4 +11,35 @@
       </div>
     </mat-card-content>
   </mat-card>
+  <mat-card class="margin-lg">
+    <mat-card-content>
+    <form [formGroup]="form" (submit)="submit()">
+      <mat-form-field appearance="outline" style="width: 100%; font-family: monospace">
+        <mat-label>Enter or paste message</mat-label>
+        <textarea matInput formControlName="message" rows="8"></textarea>
+        <mat-error>
+          <span *ngIf="form.controls['message']?.errors?.required">Message is required.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Logging Level</mat-label>
+        <mat-select formControlName="logLevel">
+          <mat-option *ngFor="let level of loggingLevelList" [value]="level">
+            {{ level }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <button mat-raised-button type="submit" color="primary">Log Message</button>
+        <button mat-raised-button type="button" class="margin-left-md" (click)="onClearFormData()">Clear Form Data</button>
+      </div>
+    </form>
+
+    <div>
+      <button mat-raised-button class="margin-top-md" color=warn (click)="onClearLog()">Trigger Clear Log</button>
+    </div>
+    </mat-card-content>
+  </mat-card>
 </div>
