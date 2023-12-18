@@ -8,6 +8,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   templateUrl: './logger-tester.component.html',
   styleUrls: ['./logger-tester.component.scss']
 })
+
 export class LoggerTesterComponent implements OnInit{
   form: FormGroup | undefined;
   constructor(private loggerService : LoggerService, private formBuilder: FormBuilder) {}
@@ -21,30 +22,10 @@ export class LoggerTesterComponent implements OnInit{
     });
 
     this.form = this.formBuilder.group({
-      message: [null, [Validators.required]],
+      message: ["Sample log message", [Validators.required]],
       logLevel: [this.loggingLevelList[0]],
       updateOn: 'submit'
     });
-  }
-
-  onClear() {
-    this.loggerService.clear();
-  }
-
-  onDebug() {
-    this.loggerService.debug('test debug msg', this.constructor.name);
-  }
-
-  onInfo() {
-    this.loggerService.info('test info msg', this.constructor.name);
-  }
-
-  onWarn() {
-    this.loggerService.warn('test warn msg', this.constructor.name);
-  }
-
-  onError() {
-    this.loggerService.error('test error msg', this.constructor.name);
   }
 
   submit() {
@@ -84,5 +65,9 @@ export class LoggerTesterComponent implements OnInit{
   onClearFormData() {
     this.form.reset();
     this.form.controls['logLevel'].patchValue(this.loggingLevelList[0]);
+  }
+
+  copyContent() {
+    this.loggerService.copyLogs();
   }
 }
