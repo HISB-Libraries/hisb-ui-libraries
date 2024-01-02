@@ -62,3 +62,8 @@ $lg: 24px;
 .padding-left-md { padding-left: $md; }
 .padding-right-md { padding-right: $md; }
 .border-radius-xs { border-radius: $xs; }
+
+
+.content-spacer{
+  flex: 1 1 auto;
+}

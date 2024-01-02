@@ -46,7 +46,6 @@ export class NgxFhirValidatorComponent {
   @Input() cancelValidationBtnShown: boolean = true;
   @Input() buttonTxtColor: string  = 'white';
   @Input() buttonBackgroundColor='#4858B8';
-  @Input() exportValidationResultsBtnVisible= false;
   @Input() exportValidationResultsBtnName: string = 'Export Results (.zip)';
 
   @Output() onValidation = new EventEmitter<ValidationResults>();

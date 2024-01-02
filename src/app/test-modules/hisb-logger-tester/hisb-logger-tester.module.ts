@@ -4,6 +4,9 @@ import { LoggerTesterComponent } from './components/logger-tester/logger-tester.
 import { NgxHisbLoggerModule } from 'ngx-hisb-logger';
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
+import {MatInputModule} from "@angular/material/input";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import {MatCardModule} from "@angular/material/card";
     NgxHisbLoggerModule,
     MatButtonModule,
     MatCardModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
 })
 export class HisbLoggerTesterModule { }
