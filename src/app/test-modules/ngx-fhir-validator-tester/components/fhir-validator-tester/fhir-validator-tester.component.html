@@ -1,15 +1,119 @@
 <div class="container">
-  <mat-card class="margin-lg">
+  <mat-card>
     <mat-card-content>
       <lib-ngx-fhir-validator
-        [validatorTitle]="'FHIR Validator'"
+        [validatorTitle]="form.controls['validatorTitle'].value"
+        [validationResultsExpanded]="form.controls['validationResultsExpanded'].value"
+        [resultDetailsExpandBtnShown]="form.controls['resultDetailsExpandBtnShown'].value"
+        [formatResourceBtnShown]="form.controls['formatResourceBtnShown'].value"
+        [clearValidatorBtnShown]="form.controls['clearValidatorBtnShown'].value"
+        [submitBtnShown]="form.controls['submitBtnShown'].value"
+        [exportResultsButtonShown]="form.controls['exportResultsButtonShown'].value"
+        [submitBtnAlignment]="form.controls['submitBtnAlignment'].value"
+        [submitBtnTitle]="form.controls['submitBtnTitle'].value"
+        [cancelValidationBtnShown]="form.controls['cancelValidationBtnShown'].value"
+        [buttonTxtColor]="form.controls['buttonTxtColor'].value"
+        [buttonBackgroundColor]="form.controls['buttonBackgroundColor'].value"
+        [exportValidationResultsBtnName]="form.controls['exportValidationResultsBtnName'].value"
+
         [validationInputFormat]="validationTextFormat"
-        [formatResourceBtnShown]="true"
-        [buttonTxtColor]="'white'"
+
         (onExportValidationResults)="onExportValidationResults($event)"
-        [exportValidationResultsBtnName]="'Export Results (.zip)'"
-        [exportValidationResultsBtnVisible]="true"
+        (onApiError)="onApiError($event)"
+        (onResourceContentChanged)="onResourceContentChanged($event)"
+        (onValidation)="onValidation($event)"
+
+
+
       ></lib-ngx-fhir-validator>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="margin-top-md">
+    <mat-card-header>
+      <mat-card-title>HISB FHIR Validator Testing Harness</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" (submit)="submit()" class="margin-top-md">
+        <div>
+          <mat-form-field appearance="outline" style="min-width: 50%">
+            <mat-label>Validator Title</mat-label>
+            <input matInput formControlName="validatorTitle">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-checkbox formControlName="validationResultsExpanded">Validation Results Expanded</mat-checkbox>
+        </div>
+
+        <div>
+          <mat-checkbox formControlName="resultDetailsExpandBtnShown">Result Details Expand Button Shown</mat-checkbox>
+        </div>
+
+        <div>
+          <mat-checkbox formControlName="formatResourceBtnShown">Format Resource Button Shown</mat-checkbox>
+        </div>
+
+        <div>
+          <mat-checkbox formControlName="clearValidatorBtnShown">Clear Validator Button Shown</mat-checkbox>
+        </div>
+
+        <div>
+          <mat-checkbox formControlName="submitBtnShown">Submit Button Shown</mat-checkbox>
+        </div>
+
+        <div>
+          <mat-checkbox formControlName="cancelValidationBtnShown">Cancel Validation Button Shown</mat-checkbox>
+        </div>
+
+        <div>
+          <mat-checkbox formControlName="exportResultsButtonShown">Export Results Button Shown</mat-checkbox>
+        </div>
+
+        <div class="margin-top-md">
+          <mat-form-field appearance="outline" style="min-width: 50%">
+            <mat-label>Max File Size (min size 10000)</mat-label>
+            <input type="number" min="100000" matInput formControlName="maxFileSize">
+          </mat-form-field>
+        </div>
+
+        <div class="margin-top-md">
+          <mat-form-field appearance="outline" style="min-width: 50%">
+            <mat-label>Submit Button Title</mat-label>
+            <input matInput formControlName="submitBtnTitle">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-radio-group formControlName="submitBtnAlignment">
+            <mat-label> Submit Button Alignment: </mat-label>
+            <mat-radio-button *ngFor="let item of buttonAlignment;" [value]="item" class="margin-left-md">{{item}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="margin-top-md">
+          <mat-form-field appearance="outline" style="min-width: 50%">
+            <mat-label>Button Text Color</mat-label>
+            <input matInput formControlName="buttonTxtColor">
+          </mat-form-field>
+        </div>
+
+        <div class="margin-top-md">
+          <mat-form-field appearance="outline" style="min-width: 50%">
+            <mat-label>Button Background Color</mat-label>
+            <input matInput formControlName="buttonBackgroundColor">
+          </mat-form-field>
+        </div>
+
+        <div class="margin-top-md">
+          <mat-form-field appearance="outline" style="min-width: 50%">
+            <mat-label>Export Validation Results Button Name</mat-label>
+            <input matInput formControlName="exportValidationResultsBtnName">
+          </mat-form-field>
+        </div>
+
+      </form>
+
     </mat-card-content>
   </mat-card>
 </div>
