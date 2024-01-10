@@ -1,9 +1,9 @@
 {
   "name": "ngx-hisb-logger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "peerDependencies": {
-    "@angular/common": "^16.2.0",
-    "@angular/core": "^16.2.0"
+    "@angular/common": "^17.0.9",
+    "@angular/core": "^17.0.9"
   },
   "dependencies": {
     "tslib": "^2.3.0"
