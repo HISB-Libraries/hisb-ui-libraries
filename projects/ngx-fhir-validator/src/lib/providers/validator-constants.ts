@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import {ImplementationGuide} from "../modal/implementation-guide";
 
 @Injectable()
 //TODO: how are these sorted?
@@ -33,5 +34,23 @@ export class ValidatorConstants {
   static DISPLAYED_COLUMNS = ['toggle', 'icon', 'severity', 'fhirPath', 'location'];
   static SEVERITY_LEVELS: string[] = ['error', 'warning', 'information', 'note'];
   static FONT_WIDTH: number = 7.54;
+
+  public static IG_LIST: ImplementationGuide[] = [
+    {
+      "name": "mdi#1.1.0",
+      "valueString": "hl7.fhir.us.mdi#1.1.0",
+      "display": "MDI FHIR IG - 1.1.0"
+    },
+    {
+      "name": "mdi#current",
+      "valueString": "hl7.fhir.us.mdi#current",
+      "display": "MDI FHIR IG - Current"
+    },
+    {
+      "name": "vrdr#2.2.0",
+      "valueString": "hl7.fhir.us.vrdr#2.2.0",
+      "display": "VRDR FHIR IG - 2.2.0"
+    }
+  ];
 
 }

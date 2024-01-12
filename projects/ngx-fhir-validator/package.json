@@ -1,6 +1,6 @@
 {
   "name": "ngx-fhir-validator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "peerDependencies": {
     "@angular/common": "^17.0.0",
     "@angular/core": "^17.0.0"
