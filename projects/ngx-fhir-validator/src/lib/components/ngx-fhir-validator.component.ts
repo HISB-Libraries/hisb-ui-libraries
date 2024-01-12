@@ -252,7 +252,6 @@ export class NgxFhirValidatorComponent {
   // Sends fhir resource to be validated, renders response
 
   private executeAPIValidation(fhirResource: any, resourceFormat: string, ig?: string) {
-    console.log(ig);
     // Reset values to default state prior to validation.
     this.isLoading = true;
     this.parsedFhirResource = '';
