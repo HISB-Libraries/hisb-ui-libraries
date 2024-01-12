@@ -15,6 +15,7 @@ import {ValidationResults} from "../modal/validation-results";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ApiResponse} from "../modal/api-response";
 import {ValidatorInput} from "../modal/validator-input-format";
+import {ImplementationGuide} from "../modal/implementation-guide";
 
 export type SubmitButtonAlignment = 'left' | 'right';
 @Component({
@@ -76,6 +77,8 @@ export class NgxFhirValidatorComponent {
   serverErrorStatus: string = ''; // We store the error response status here (i.e. 404, 500)
   lines : number = 1;
   width : number = 0;
+  igList = ValidatorConstants.IG_LIST;
+  selectedIG: ImplementationGuide = this.igList[0];
 
   //TODO remove this code when the API returns a timeout error
   serverTimoutDetected = false;
@@ -204,7 +207,7 @@ export class NgxFhirValidatorComponent {
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
-      this.executeAPIValidation(fhirResource, resourceFormat);
+      this.executeAPIValidation(fhirResource, resourceFormat, this.selectedIG?.valueString);
     }
   }
 
@@ -248,8 +251,7 @@ export class NgxFhirValidatorComponent {
 
   // Sends fhir resource to be validated, renders response
 
-  private executeAPIValidation(fhirResource: any, resourceFormat: string) {
-
+  private executeAPIValidation(fhirResource: any, resourceFormat: string, ig?: string) {
     // Reset values to default state prior to validation.
     this.isLoading = true;
     this.parsedFhirResource = '';
@@ -264,7 +266,7 @@ export class NgxFhirValidatorComponent {
       fhirResource = fhirResourceXML.documentElement.outerHTML;
     }
 
-    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat)
+    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, ig)
       .subscribe({
         next: (response) => {
           this.validationFinished = true;
