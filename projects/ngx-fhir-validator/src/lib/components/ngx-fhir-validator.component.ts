@@ -229,8 +229,9 @@ export class NgxFhirValidatorComponent {
       return [];
     }
     return apiResponse.issue
-      .filter((element: any) => element.severity == severity)
-      .map((element: any) => this.getLineNumberFromLocation(element.location[0]) - 1);
+      .filter(element => element.severity == severity)
+      .filter(element => element.location)
+      .map(element => this.getLineNumberFromLocation(element.location[0]) - 1);
   };
 
   scrollToElement(location: string ): void {
