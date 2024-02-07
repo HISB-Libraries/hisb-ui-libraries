@@ -46,14 +46,17 @@
     </mat-radio-button>
   </mat-radio-group>
 
-  <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
-    <mat-label>Select IG</mat-label>
-    <mat-select [(value)]="selectedIG">
-      <mat-option *ngFor="let ig of igList" [value]="ig">
-        {{ig.display}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  @if(igList?.length > 1){
+    <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
+      <mat-label>Select IG</mat-label>
+      <mat-select [(value)]="selectedIG">
+        <mat-option *ngFor="let ig of igList" [value]="ig">
+          {{ig.display}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  }
+
 
   <span class="content-spacer" *ngIf="validationInputFormat?.format == 'xml and json'"></span>
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ValidationResults, ValidatorInput} from "ngx-fhir-validator";
+import {ValidationResults, ValidatorInput, ImplementationGuide} from "ngx-fhir-validator";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 
@@ -13,6 +13,23 @@ export class FhirValidatorTesterComponent implements  OnInit {
   validationTextFormat: ValidatorInput = {format: 'xml and json', accepts: 'text/*,.xml,.json'};
   form: FormGroup;
   buttonAlignment = ['right' , 'left']
+  igList: ImplementationGuide[] = [
+    {
+      "name": "mdi#1.1.0",
+      "valueString": "hl7.fhir.us.mdi#1.1.0",
+      "display": "MDI FHIR IG - 1.1.0"
+    },
+    {
+      "name": "mdi#current",
+      "valueString": "hl7.fhir.us.mdi#current",
+      "display": "MDI FHIR IG - Current"
+    },
+    {
+      "name": "vrdr#2.2.0",
+      "valueString": "hl7.fhir.us.vrdr#2.2.0",
+      "display": "VRDR FHIR IG - 2.2.0"
+    }
+  ];
 
   constructor(private formBuilder: FormBuilder) {
   }
