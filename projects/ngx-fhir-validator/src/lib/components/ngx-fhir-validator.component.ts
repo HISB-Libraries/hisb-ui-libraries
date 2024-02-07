@@ -2,7 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
   ViewChild
 } from '@angular/core';
@@ -32,7 +32,7 @@ export type SubmitButtonAlignment = 'left' | 'right';
 })
 
 
-export class NgxFhirValidatorComponent {
+export class NgxFhirValidatorComponent implements OnInit{
   @Input() validatorTitle: string = '';
   @Input() validationResultsExpanded: boolean = false; // Validation results details initial state
   @Input() resultDetailsExpandBtnShown: boolean = true; // Show/hide Expand Validation Results btn
@@ -48,6 +48,7 @@ export class NgxFhirValidatorComponent {
   @Input() buttonTxtColor: string  = 'white';
   @Input() buttonBackgroundColor='#4858B8';
   @Input() exportValidationResultsBtnName: string = 'Export Results (.zip)';
+  @Input({ required: true }) igList: ImplementationGuide[];
 
   @Output() onValidation = new EventEmitter<ValidationResults>();
   @Output() onApiError = new EventEmitter<any>();
@@ -77,8 +78,7 @@ export class NgxFhirValidatorComponent {
   serverErrorStatus: string = ''; // We store the error response status here (i.e. 404, 500)
   lines : number = 1;
   width : number = 0;
-  igList = ValidatorConstants.IG_LIST;
-  selectedIG: ImplementationGuide = this.igList[0];
+  selectedIG: ImplementationGuide;
 
   //TODO remove this code when the API returns a timeout error
   serverTimoutDetected = false;
@@ -91,6 +91,10 @@ export class NgxFhirValidatorComponent {
     this.severityLevelsFormControl = new UntypedFormControl(this.severityLevels);
     this.dataSource = new MatTableDataSource<any[]>();
     this.apiResponse = null;
+  }
+
+  ngOnInit(): void {
+    this.selectedIG = this.igList[0];
   }
 
   formatFhirResource(){
