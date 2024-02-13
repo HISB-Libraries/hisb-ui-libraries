@@ -6,16 +6,19 @@ import {MatCardModule} from "@angular/material/card";
 import {CommonModule} from "@angular/common";
 import {MatDialogModule} from "@angular/material/dialog";
 import { CommonErrorTesterComponent } from './components/common-error-tester/common-error-tester.component';
-import {CommonErrorComponent} from "ngx-hisb-common-ui";
+import {CommonErrorComponent, HeaderComponent, NavMenuComponent} from "ngx-hisb-common-ui";
+import {NavMenuTesterComponent} from "./components/nav-menu-tester/nav-menu-tester.component";
 
 @NgModule({
   declarations: [
     DialogTesterComponent,
-    CommonErrorTesterComponent
+    CommonErrorTesterComponent,
+    NavMenuTesterComponent
   ],
   exports:[
     DialogTesterComponent,
-    CommonErrorTesterComponent
+    CommonErrorTesterComponent,
+    NavMenuTesterComponent
   ],
   imports: [
     CommonModule,
@@ -24,6 +27,8 @@ import {CommonErrorComponent} from "ngx-hisb-common-ui";
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
+    HeaderComponent, // Confirmed
+    NavMenuComponent, // Confirmed
   ],
 })
 export class NgxHisbCommonUiTesterModule { }
