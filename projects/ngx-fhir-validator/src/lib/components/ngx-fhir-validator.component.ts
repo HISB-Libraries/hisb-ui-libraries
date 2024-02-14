@@ -21,7 +21,7 @@ export type SubmitButtonAlignment = 'left' | 'right';
 @Component({
   selector: 'lib-ngx-fhir-validator',
   templateUrl: 'ngx-fhir-validator.component.html',
-  styleUrls: ['ngx-fhir-validator.component.css'],
+  styleUrls: ['ngx-fhir-validator.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),

@@ -139,7 +139,7 @@
   </span>
 </div>
 
-<div class="row-button-wrapper top-padding" *ngIf="isLoading && cancelValidationBtnShown">
+<div class="row-button-wrapper padding-top-md" *ngIf="isLoading && cancelValidationBtnShown">
   <span class="content-spacer"></span>
   <button mat-raised-button color="warn" (click)="onCancelValidation()">
     <mat-icon>cancel</mat-icon>
@@ -150,7 +150,7 @@
 <!-- Actions available after validator has processed data-->
 
 <div *ngIf="apiResponse?.issue && !isLoading">
-  <div class="top-padding">
+  <div class="padding-top-md">
 
     <div (click)="onFilterResults()">
       <mat-button-toggle-group name="severity level filter" [formControl]="severityLevelsFormControl"
@@ -183,7 +183,7 @@
       </mat-button-toggle-group>
     </div>
 
-    <div class="top-padding box" *ngIf="validationResultsExpanded">
+    <div class="padding-top-md box" *ngIf="validationResultsExpanded">
       <button mat-raised-button color=primary *ngIf="!resultDetailsExpandBtnShown" (click)="resultDetailsExpandBtnShown = true">
         <mat-icon>expand_more</mat-icon> Expand Validation Results
       </button>
@@ -202,9 +202,9 @@
       Please select severity level to see the result.
     </div>
 
-    <div class="top-padding box margin-bottom-md" *ngIf="(!validationResultsExpanded) && exportResultsButtonShown">
+    <div class="padding-top-md box margin-bottom-md" *ngIf="(!validationResultsExpanded) && exportResultsButtonShown">
       <button mat-raised-button (click)="exportValidationResults()" color="accent"
-              [disabled]="!(dataSource?.data?.length>0)" class="left-margin-md">
+              [disabled]="!(dataSource?.data?.length>0)" class="margin-left-md">
         <mat-icon>folder_zip</mat-icon>
         {{exportValidationResultsBtnName}}
       </button>
@@ -307,7 +307,7 @@
 
   <!-- Resource as returned from the validator. Note that the resource returned from the validator may be
    formatted differently then the resource we sent to the validator. -->
-  <div class="top-padding" *ngIf="resultDetailsExpandBtnShown && apiResponse?.formattedResource">
+  <div class="padding-top-md" *ngIf="resultDetailsExpandBtnShown && apiResponse?.formattedResource">
     <div class="line-numbers-response" #numbers>
       <div *ngFor="let item of apiResponse?.formattedResource?.split('\n'); let i = index"><div class="numbers-response">{{i + 1}}</div></div>
     </div>

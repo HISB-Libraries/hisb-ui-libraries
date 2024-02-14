@@ -1,3 +1,32 @@
+$xs: 4px;
+$sm: 8px;
+$md: 16px;
+$lg: 24px;
+.margin-sm { margin: $sm; }
+.margin-md { margin: $md; }
+.margin-lg { margin: $lg; }
+.padding-xs { padding: $xs; }
+.padding-sm { padding: $sm; }
+.padding-md { padding: $md; }
+.padding-lg { padding: $lg; }
+
+// Add more of the following as needed.
+.margin-bottom-xs { margin-bottom: $xs; }
+.margin-bottom-sm { margin-bottom: $sm; }
+.margin-bottom-md { margin-bottom: $md; }
+.margin-top-xs { margin-top: $xs; }
+.margin-top-sm { margin-top: $sm; }
+.margin-top-md { margin-top: $md; }
+.margin-left-md { margin-left: $md; }
+.margin-right-md { margin-right: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-top-md { padding-top: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-left-md { padding-left: $md; }
+.padding-right-md { padding-right: $md; }
+.border-radius-xs { border-radius: $xs; }
+
+
 /*We may have to change the text area to resize dynamically as different users have different aspect ration screens.
 * see https://stackoverflow.com/questions/17772260/textarea-auto-height
 */
@@ -270,29 +299,6 @@ mat-button-toggle{
 .warning-color{
   color: #ffc107;
 }
-.top-padding{
-  padding-top: 16px;
-}
-
-.right-margin-md {
-  margin-right: 16px;
-}
-
-.left-margin-md {
-  margin-left: 16px;
-}
-
-.top-margin-md{
-  margin-top: 16px;
-}
-
-.bottom-margin-md{
-  margin-bottom: 16px;
-}
-
-.margin-md {
-  margin: 16px 16px 16px 16px;
-}
 
 .line-item {
   margin: 0;
@@ -304,3 +310,5 @@ mat-button-toggle{
   flex-direction: column;
   align-items: flex-end;
 }
+
+
