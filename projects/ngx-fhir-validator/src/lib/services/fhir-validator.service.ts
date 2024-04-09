@@ -116,7 +116,7 @@ export class FhirValidatorService {
     return formatted.substring(1, formatted.length-3);
   }
 
-  validateFhirResource(fhirResource: any, resourceFormat: string):  Observable<any> {
+  validateFhirResource(fhirResource: any, resourceFormat: string, ig: string):  Observable<any> {
 
     let headers: any| null= null;
     let requestData: any| null = null;
@@ -129,7 +129,7 @@ export class FhirValidatorService {
         "parameter": [
           {
             "name": "ig",
-            "valueString": "hl7.fhir.us.mdi#current"
+            "valueString": ig
           },
           {
             "name": "resource",
@@ -159,7 +159,7 @@ export class FhirValidatorService {
         `<Parameters xmlns="http://hl7.org/fhir">
           <parameter>
             <name value="ig"/>
-            <valueString value="hl7.fhir.us.mdi#1.0.0"/>
+            <valueString value="${ig}"/>
           </parameter>
           <parameter>
             <name value="format"/>

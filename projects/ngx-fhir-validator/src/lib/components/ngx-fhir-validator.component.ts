@@ -2,7 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
   ViewChild
 } from '@angular/core';
@@ -15,12 +15,13 @@ import {ValidationResults} from "../modal/validation-results";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ApiResponse} from "../modal/api-response";
 import {ValidatorInput} from "../modal/validator-input-format";
+import {ImplementationGuide} from "../modal/implementation-guide";
 
 export type SubmitButtonAlignment = 'left' | 'right';
 @Component({
   selector: 'lib-ngx-fhir-validator',
   templateUrl: 'ngx-fhir-validator.component.html',
-  styleUrls: ['ngx-fhir-validator.component.css'],
+  styleUrls: ['ngx-fhir-validator.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -31,7 +32,7 @@ export type SubmitButtonAlignment = 'left' | 'right';
 })
 
 
-export class NgxFhirValidatorComponent {
+export class NgxFhirValidatorComponent implements OnInit{
   @Input() validatorTitle: string = '';
   @Input() validationResultsExpanded: boolean = false; // Validation results details initial state
   @Input() resultDetailsExpandBtnShown: boolean = true; // Show/hide Expand Validation Results btn
@@ -47,6 +48,7 @@ export class NgxFhirValidatorComponent {
   @Input() buttonTxtColor: string  = 'white';
   @Input() buttonBackgroundColor='#4858B8';
   @Input() exportValidationResultsBtnName: string = 'Export Results (.zip)';
+  @Input({ required: true }) igList: ImplementationGuide[];
 
   @Output() onValidation = new EventEmitter<ValidationResults>();
   @Output() onApiError = new EventEmitter<any>();
@@ -76,6 +78,7 @@ export class NgxFhirValidatorComponent {
   serverErrorStatus: string = ''; // We store the error response status here (i.e. 404, 500)
   lines : number = 1;
   width : number = 0;
+  selectedIG: ImplementationGuide;
 
   //TODO remove this code when the API returns a timeout error
   serverTimoutDetected = false;
@@ -88,6 +91,10 @@ export class NgxFhirValidatorComponent {
     this.severityLevelsFormControl = new UntypedFormControl(this.severityLevels);
     this.dataSource = new MatTableDataSource<any[]>();
     this.apiResponse = null;
+  }
+
+  ngOnInit(): void {
+    this.selectedIG = this.igList[0];
   }
 
   formatFhirResource(){
@@ -204,7 +211,7 @@ export class NgxFhirValidatorComponent {
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
-      this.executeAPIValidation(fhirResource, resourceFormat);
+      this.executeAPIValidation(fhirResource, resourceFormat, this.selectedIG?.valueString);
     }
   }
 
@@ -226,8 +233,9 @@ export class NgxFhirValidatorComponent {
       return [];
     }
     return apiResponse.issue
-      .filter((element: any) => element.severity == severity)
-      .map((element: any) => this.getLineNumberFromLocation(element.location[0]) - 1);
+      .filter(element => element.severity == severity)
+      .filter(element => element.location)
+      .map(element => this.getLineNumberFromLocation(element.location[0]) - 1);
   };
 
   scrollToElement(location: string ): void {
@@ -248,8 +256,7 @@ export class NgxFhirValidatorComponent {
 
   // Sends fhir resource to be validated, renders response
 
-  private executeAPIValidation(fhirResource: any, resourceFormat: string) {
-
+  private executeAPIValidation(fhirResource: any, resourceFormat: string, ig?: string) {
     // Reset values to default state prior to validation.
     this.isLoading = true;
     this.parsedFhirResource = '';
@@ -264,7 +271,7 @@ export class NgxFhirValidatorComponent {
       fhirResource = fhirResourceXML.documentElement.outerHTML;
     }
 
-    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat)
+    this.fhirValidatorService.validateFhirResource(fhirResource, resourceFormat, ig)
       .subscribe({
         next: (response) => {
           this.validationFinished = true;
