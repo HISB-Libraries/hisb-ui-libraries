@@ -87,7 +87,9 @@
         <div>
           <mat-radio-group formControlName="submitBtnAlignment">
             <mat-label> Submit Button Alignment: </mat-label>
-            <mat-radio-button *ngFor="let item of buttonAlignment;" [value]="item" class="margin-left-md">{{item}}</mat-radio-button>
+            @for (item of buttonAlignment; track item) {
+              <mat-radio-button [value]="item" class="margin-left-md">{{item}}</mat-radio-button>
+            }
           </mat-radio-group>
         </div>
 

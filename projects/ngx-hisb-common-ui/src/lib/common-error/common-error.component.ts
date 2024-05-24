@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
-import {CommonModule} from "@angular/common";
 import {BrowserModule} from "@angular/platform-browser";
 
 @Component({
@@ -8,9 +7,8 @@ import {BrowserModule} from "@angular/platform-browser";
   standalone: true,
   imports: [
     MatButtonModule,
-    CommonModule,
     BrowserModule
-  ],
+],
   selector: 'lib-common-error',
   templateUrl: './common-error.component.html',
   styleUrls: ['./common-error.component.scss'],

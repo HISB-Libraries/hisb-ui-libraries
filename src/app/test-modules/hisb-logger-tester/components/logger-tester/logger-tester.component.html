@@ -16,16 +16,20 @@
           <mat-label>Enter or paste message</mat-label>
           <textarea matInput formControlName="message" rows="8"></textarea>
           <mat-error>
-            <span *ngIf="form.controls['message']?.errors?.required">Message is required.</span>
+            @if (form.controls['message']?.errors?.required) {
+              <span>Message is required.</span>
+            }
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Logging Level</mat-label>
           <mat-select formControlName="logLevel">
-            <mat-option *ngFor="let level of loggingLevelList" [value]="level">
-              {{ level }}
-            </mat-option>
+            @for (level of loggingLevelList; track level) {
+              <mat-option [value]="level">
+                {{ level }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
 

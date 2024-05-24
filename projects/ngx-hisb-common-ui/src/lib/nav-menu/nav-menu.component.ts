@@ -4,21 +4,20 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {CommonModule} from "@angular/common";
+
 import {RouterLink} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
 
 @Component({
   standalone: true,
     imports: [
-        MatButtonModule,
-        MatIconModule,
-        MatToolbarModule,
-        MatTooltipModule,
-        CommonModule,
-        RouterLink,
-        MatMenuModule
-    ],
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    RouterLink,
+    MatMenuModule
+],
   selector: 'common-nav-menu',
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
