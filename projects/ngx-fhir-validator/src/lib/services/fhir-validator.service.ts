@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {ValidatorConstants} from "../providers/validator-constants";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {EnvironmentHandlerService} from "../environment-handler.service";

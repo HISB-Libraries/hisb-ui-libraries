@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
-import {CommonModule} from "@angular/common";
 import {MatButtonModule} from "@angular/material/button";
 import {DialogData} from "../domain/dialog-data";
 
@@ -11,9 +10,8 @@ import {DialogData} from "../domain/dialog-data";
   standalone: true,
   imports: [
     MatDialogModule,
-    MatButtonModule,
-    CommonModule
-  ]
+    MatButtonModule
+]
 })
 export class ConformationDialogComponent implements OnInit {
 

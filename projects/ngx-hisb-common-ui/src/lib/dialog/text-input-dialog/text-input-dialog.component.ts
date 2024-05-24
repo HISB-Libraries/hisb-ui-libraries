@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   AbstractControl,
   ReactiveFormsModule,
@@ -17,14 +17,12 @@ import {TextInputDialogData} from "../domain/text-input-dialog-data";
   selector: 'lib-text-input-dialog',
   standalone: true,
   imports: [
-    CommonModule,
     MatButtonModule,
-    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatDialogModule,
     MatInputModule
-  ],
+],
   templateUrl: './text-input-dialog.component.html',
   styleUrls: ['./text-input-dialog.component.css']
 })
