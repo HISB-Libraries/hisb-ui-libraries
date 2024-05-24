@@ -11,19 +11,22 @@
 
   <div class="vertical-spacer"></div>
 
-  <div class="option-wrapper"
-       *ngFor="let item of options.options; let i = index"
-       [style.background-color]="i === selectedOption ? contrastColor : backgroundColor "
-       [style.color]="i === selectedOption ?  backgroundColor : contrastColor"
-       (click)="select(i)"
-       matTooltip="{{item.label}}"
-       matTooltipPosition="after"
-       [matTooltipDisabled]="expanded"
-       [routerLink]="item.routerLink"
-  >
-    <mat-icon [class]="expanded? 'scaled-icon' : 'small-icon'" svgIcon="{{item.iconName}}">
-    </mat-icon>
-    <br>
-    <span *ngIf="expanded" class="icon-label-large">{{item.label}}</span>
+  @for (item of options.options; track item; let i = $index) {
+    <div class="option-wrapper"
+      [style.background-color]="i === selectedOption ? contrastColor : backgroundColor "
+      [style.color]="i === selectedOption ?  backgroundColor : contrastColor"
+      (click)="select(i)"
+      matTooltip="{{item.label}}"
+      matTooltipPosition="after"
+      [matTooltipDisabled]="expanded"
+      [routerLink]="item.routerLink"
+      >
+      <mat-icon [class]="expanded? 'scaled-icon' : 'small-icon'" svgIcon="{{item.iconName}}">
+      </mat-icon>
+      <br>
+        @if (expanded) {
+          <span class="icon-label-large">{{item.label}}</span>
+        }
+      </div>
+    }
   </div>
-</div>

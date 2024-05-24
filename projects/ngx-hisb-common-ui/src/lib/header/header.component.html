@@ -9,28 +9,40 @@
     </div>
 
     <div class="content-spacer"></div>
-    <div class="version-label" *ngIf="version">
-      Version: {{ version }}
-    </div>
-    <div *ngIf="configuration?.menuItem">
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-    </div>
+    @if (version) {
+      <div class="version-label">
+        Version: {{ version }}
+      </div>
+    }
+    @if (configuration?.menuItem) {
+      <div>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    }
     <div>
-      <button mat-icon-button aria-label="User Management" *ngIf="showUserManagement">
-        <mat-icon>account_circle</mat-icon>
-      </button>
+      @if (showUserManagement) {
+        <button mat-icon-button aria-label="User Management">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      }
     </div>
   </mat-toolbar-row>
 
   <mat-menu #menu="matMenu">
-    <div *ngFor="let item of configuration?.menuItem">
-      <mat-divider *ngIf="item.divider"></mat-divider>
-      <button mat-menu-item *ngIf="!item.divider" (click)="openLink(item.link)">
-        <span>{{ item.label }}</span>
-      </button>
-    </div>
+    @for (item of configuration?.menuItem; track item) {
+
+      @if (item.divider) {
+        <mat-divider></mat-divider>
+      }
+      @if (!item.divider) {
+        <button mat-menu-item (click)="openLink(item.link)">
+          <span>{{ item.label }}</span>
+        </button>
+      }
+
+    }
   </mat-menu>
 </mat-toolbar>
 

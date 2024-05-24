@@ -3,7 +3,7 @@ import {HeaderConfig} from "./header.config";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
-import {CommonModule, NgIf} from "@angular/common";
+
 import {MatMenuModule} from "@angular/material/menu";
 import {RouterLink} from "@angular/router";
 import {MatDividerModule} from "@angular/material/divider";
@@ -15,12 +15,11 @@ import {BrowserModule} from "@angular/platform-browser";
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    CommonModule,
     MatMenuModule,
     RouterLink,
     MatDividerModule,
     BrowserModule
-  ],
+],
   selector: 'common-header',
   styleUrls: ['./header.component.css'],
   templateUrl: 'header.component.html'
