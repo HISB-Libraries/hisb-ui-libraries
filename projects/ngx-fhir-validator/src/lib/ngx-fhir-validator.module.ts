@@ -23,49 +23,43 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatChipsModule} from "@angular/material/chips";
 import {BrowserModule} from "@angular/platform-browser";
 import {MatDividerModule} from "@angular/material/divider";
-import {HttpClientModule} from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {ValidatorConstants} from "./providers/validator-constants";
 
 
 
-@NgModule({
-  declarations: [
-    NgxFhirValidatorComponent
-  ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    HttpClientModule,
-    MatRadioModule,
-    FormsModule,
-    MatCardModule,
-    MatSnackBarModule,
-    MatSelectModule,
-    MatButtonToggleModule,
-    MatChipsModule,
-    MatCheckboxModule,
-    MatTooltipModule,
-    MatDividerModule,
-  ],
-  exports: [
-    NgxFhirValidatorComponent
-  ],
-  providers: [
-    ValidatorConstants
-  ]
-})
+@NgModule({ declarations: [
+        NgxFhirValidatorComponent
+    ],
+    exports: [
+        NgxFhirValidatorComponent
+    ], imports: [CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
+        MatRadioModule,
+        FormsModule,
+        MatCardModule,
+        MatSnackBarModule,
+        MatSelectModule,
+        MatButtonToggleModule,
+        MatChipsModule,
+        MatCheckboxModule,
+        MatTooltipModule,
+        MatDividerModule], providers: [
+        ValidatorConstants,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class NgxFhirValidatorModule {
 
   public static forRoot(serverBaseUrl: string): ModuleWithProviders<NgxFhirValidatorModule>{
