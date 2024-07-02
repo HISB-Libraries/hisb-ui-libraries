@@ -1,5 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
-import {ValidatorConstants} from "../providers/validator-constants";
+import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -142,11 +141,7 @@ export class FhirValidatorService {
           {
             "name": "format",
             "valueString": "application/fhir+json"
-          },
-          {
-            "name": "includeFormattedResource",
-            "valueBoolean": true
-          },
+          }
         ]
       }
 
@@ -183,5 +178,9 @@ export class FhirValidatorService {
     return this.http.post(this.serverBaseUrl + "$validate", requestData, {headers: headers}).pipe(map((result: any) => (
       result as Object
     )));
+  }
+
+  getIgList(){
+    return this.http.get(this.serverBaseUrl + "$packages")
   }
 }

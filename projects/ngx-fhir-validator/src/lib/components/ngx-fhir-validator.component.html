@@ -61,16 +61,26 @@
   @if(igList?.length > 1){
     <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
       <mat-label>Select IG</mat-label>
-      <mat-select [(value)]="selectedIG">
-        @for (ig of igList; track ig) {
-          <mat-option [value]="ig">
-            {{ig.display}}
+      <mat-select [(value)]="selectedIgName" (selectionChange)="getIgVersionsList(selectedIgName, igList)">
+        @for (igName of igNameList; track igName) {
+          <mat-option [value]="igName">
+            {{igName}}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
+      <mat-label>Select IG Version</mat-label>
+      <mat-select [(value)]="selectedIgVersion" [disabled]="!selectedIgName"  (selectionChange)="setSelectedIg(selectedIgName, selectedIgVersion)">
+        @for (igVersion of igVersionDropdownList; track igVersion) {
+          <mat-option [value]="igVersion">
+            {{igVersion}}
           </mat-option>
         }
       </mat-select>
     </mat-form-field>
   }
-
 
   @if (validationInputFormat?.format == 'xml and json') {
     <span class="content-spacer"></span>
@@ -161,7 +171,7 @@
     }
     @if (submitBtnShown && (submitBtnAlignment =='right') && !isLoading) {
       <span class="left-margin-spacer">
-        <button mat-raised-button color="accent" class="button"
+        <button mat-raised-button color="accent" class="button"  [disabled]="!selectedIG"
           (click)="validateFhirResource(fhirResource, resourceFormat)">
           <mat-icon>send</mat-icon>
           {{ submitBtnTitle}}

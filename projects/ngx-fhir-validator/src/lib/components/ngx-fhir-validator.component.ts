@@ -48,12 +48,12 @@ export class NgxFhirValidatorComponent implements OnInit{
   @Input() buttonTxtColor: string  = 'white';
   @Input() buttonBackgroundColor='#4858B8';
   @Input() exportValidationResultsBtnName: string = 'Export Results (.zip)';
-  @Input({ required: true }) igList: ImplementationGuide[];
 
   @Output() onValidation = new EventEmitter<ValidationResults>();
   @Output() onApiError = new EventEmitter<any>();
   @Output() onResourceContentChanged = new EventEmitter<any>();
   @Output() onExportValidationResults = new EventEmitter<any>();
+  @Input() ig: ImplementationGuide;
 
 
   @ViewChild('validatorInput',{static:false, read: ElementRef}) inputRef: any;
@@ -78,6 +78,12 @@ export class NgxFhirValidatorComponent implements OnInit{
   serverErrorStatus: string = ''; // We store the error response status here (i.e. 404, 500)
   lines : number = 1;
   width : number = 0;
+  igList: ImplementationGuide[] = [];
+  igNameList: string[] = [];
+  igVersionList: string[] = [];
+  selectedIgName: string;
+  selectedIgVersion: string;
+  igVersionDropdownList: string[];
   selectedIG: ImplementationGuide;
 
   //TODO remove this code when the API returns a timeout error
@@ -94,7 +100,26 @@ export class NgxFhirValidatorComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.selectedIG = this.igList[0];
+    if(this.ig){
+      this.selectedIG = this.ig;
+    }
+    else{
+      this.getIgList();
+    }
+  }
+
+  getIgList() {
+
+    this.fhirValidatorService.getIgList().subscribe({
+      next: (value: any) => {
+        this.igList = value;
+        this.igNameList = value.map(el => el.name);
+        this.igNameList = [...new Set(this.igNameList)];
+        this.igVersionList = value.map(el => el.version);
+      },
+      error: err => console.error(err)
+    });
+
   }
 
   formatFhirResource(){
@@ -211,7 +236,7 @@ export class NgxFhirValidatorComponent implements OnInit{
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
-      this.executeAPIValidation(fhirResource, resourceFormat, this.selectedIG?.valueString);
+      this.executeAPIValidation(fhirResource, resourceFormat, this.selectedIG?.canonicalUrl);
     }
   }
 
@@ -461,4 +486,11 @@ export class NgxFhirValidatorComponent implements OnInit{
   }
 
 
+  getIgVersionsList(selectedIgName: string, igList: ImplementationGuide[]) {
+    this.igVersionDropdownList = igList.filter(el=> el.name== selectedIgName).map( el=> el.version)
+  }
+
+  setSelectedIg(selectedIgName: string, selectedIgVersion: string) {
+    this.selectedIG = this.igList.find(el => el.name == selectedIgName && el.version == selectedIgVersion);
+  }
 }
