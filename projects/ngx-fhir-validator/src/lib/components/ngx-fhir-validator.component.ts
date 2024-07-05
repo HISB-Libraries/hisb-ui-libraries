@@ -207,7 +207,7 @@ export class NgxFhirValidatorComponent implements OnInit{
     }
   }
 
-  validateFhirResource(fhirResource?: any, resourceFormat?: string) {
+  validateFhirResource(fhirResource: any, resourceFormat: string, selectedIg: ImplementationGuide) {
     // Set the stage for the validation. Reset variables to default values.
     if(!fhirResource){
       fhirResource = this.fhirResource
@@ -227,7 +227,7 @@ export class NgxFhirValidatorComponent implements OnInit{
     this.serverTimoutDetected = false;
     this.severityLevelsFormControl.patchValue(this.severityLevels);
 
-    this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
+    this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat, selectedIg);
     if(this.validationErrorStr){
       //see if we can find any obvious issues with the resource here
       this.isValidResource = false;
@@ -281,7 +281,7 @@ export class NgxFhirValidatorComponent implements OnInit{
 
   // Sends fhir resource to be validated, renders response
 
-  private executeAPIValidation(fhirResource: any, resourceFormat: string, ig?: string) {
+  private executeAPIValidation(fhirResource: any, resourceFormat: string, ig: string) {
     // Reset values to default state prior to validation.
     this.isLoading = true;
     this.parsedFhirResource = '';

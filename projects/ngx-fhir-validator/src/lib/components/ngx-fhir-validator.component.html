@@ -134,7 +134,7 @@
     @if (submitBtnShown && (submitBtnAlignment=='left') && !isLoading) {
       <span>
         <button mat-raised-button [style.background-color]="buttonBackgroundColor" [style.color]="buttonTxtColor" class="button"
-          (click)="validateFhirResource(fhirResource, resourceFormat)">
+          (click)="validateFhirResource(fhirResource, resourceFormat, selectedIG)">
           <mat-icon>send</mat-icon>
           Submit
         </button>
@@ -171,8 +171,8 @@
     }
     @if (submitBtnShown && (submitBtnAlignment =='right') && !isLoading) {
       <span class="left-margin-spacer">
-        <button mat-raised-button color="accent" class="button"  [disabled]="!selectedIG"
-          (click)="validateFhirResource(fhirResource, resourceFormat)">
+        <button mat-raised-button color="accent" class="button"
+          (click)="validateFhirResource(fhirResource, resourceFormat, selectedIG)">
           <mat-icon>send</mat-icon>
           {{ submitBtnTitle}}
         </button>
