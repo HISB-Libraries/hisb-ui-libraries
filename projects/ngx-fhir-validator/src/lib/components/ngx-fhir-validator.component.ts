@@ -487,7 +487,9 @@ export class NgxFhirValidatorComponent implements OnInit{
 
 
   getIgVersionsList(selectedIgName: string, igList: ImplementationGuide[]) {
-    this.igVersionDropdownList = igList.filter(el=> el.name== selectedIgName).map( el=> el.version)
+    this.igVersionDropdownList = igList.filter(el=> el.name== selectedIgName).map( el=> el.version);
+    this.selectedIgVersion = this.igVersionList.find(el=> el == 'current');
+    this.selectedIG = this.igList.find(el => el.name == selectedIgName && el.version == this.selectedIgVersion);
   }
 
   setSelectedIg(selectedIgName: string, selectedIgVersion: string) {

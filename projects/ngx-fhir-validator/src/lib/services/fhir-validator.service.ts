@@ -45,7 +45,7 @@ export class FhirValidatorService {
       return "Please enter a FHIR resource for validation.";
     }
     else if(!selectedIg){
-      return "Please select an IG name and version";
+      return "Please select an Implementation Guide";
     }
     else if (resourceFormat === 'json'){
       if(!this.isJson(fhirResource)){
