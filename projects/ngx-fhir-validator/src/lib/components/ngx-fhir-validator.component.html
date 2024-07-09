@@ -59,21 +59,24 @@
   }
 
   @if(igList?.length > 1){
+    <form [formGroup]="igSelectionFg">
     <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
       <mat-label>Select IG</mat-label>
-      <mat-select [(value)]="selectedIgName" (selectionChange)="getIgVersionsList(selectedIgName, igList)">
+      <mat-select formControlName="selectedIgName">
         @for (igName of igNameList; track igName) {
           <mat-option [value]="igName">
-            {{igName}}
+            {{ igName }}
           </mat-option>
         }
       </mat-select>
-      <mat-error>The minimum character length is 8</mat-error>
+      @if (igSelectionFg.invalid) {
+        <mat-error>Select Implementation Guide</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
       <mat-label>Select IG Version</mat-label>
-      <mat-select [(value)]="selectedIgVersion" [disabled]="!selectedIgName"  (selectionChange)="setSelectedIg(selectedIgName, selectedIgVersion)">
+      <mat-select [disabled]="!selectedIgName" formControlName="selectedIgVersion">
         @for (igVersion of igVersionDropdownList; track igVersion) {
           <mat-option [value]="igVersion">
             {{igVersion}}
@@ -81,6 +84,7 @@
         }
       </mat-select>
     </mat-form-field>
+    </form>
   }
 
   @if (validationInputFormat?.format == 'xml and json') {
@@ -120,7 +124,7 @@
     rows="30"
     [(ngModel)]="fhirResource"
     (ngModelChange)="onResourceContentChanged.emit(fhirResource)"
-    [ngStyle]="{'border-color': (!!validationErrorStr) ? 'red': null }"
+    [ngStyle]="{'border-color': (!!validationErrorStr && validationErrorStr != 'Please select an Implementation Guide') ? 'red': null }"
     (paste)="onPasteFhirResource($event)"
     [disabled]="isLoading"
     (input)="lineNumbers()"
@@ -135,7 +139,7 @@
     @if (submitBtnShown && (submitBtnAlignment=='left') && !isLoading) {
       <span>
         <button mat-raised-button [style.background-color]="buttonBackgroundColor" [style.color]="buttonTxtColor" class="button"
-          (click)="validateFhirResource(fhirResource, resourceFormat, selectedIG)">
+          (click)="validateFhirResource(fhirResource, resourceFormat)">
           <mat-icon>send</mat-icon>
           Submit
         </button>
@@ -173,7 +177,7 @@
     @if (submitBtnShown && (submitBtnAlignment =='right') && !isLoading) {
       <span class="left-margin-spacer">
         <button mat-raised-button color="accent" class="button"
-          (click)="validateFhirResource(fhirResource, resourceFormat, selectedIG)">
+          (click)="validateFhirResource(fhirResource, resourceFormat)">
           <mat-icon>send</mat-icon>
           {{ submitBtnTitle}}
         </button>
