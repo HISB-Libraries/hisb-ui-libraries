@@ -226,7 +226,7 @@ export class NgxFhirValidatorComponent implements OnInit{
       resourceFormat = this.resourceFormat
     }
 
-    if(this.igSelectionFg.controls) {
+    if(this.igSelectionFg.controls?.['selectedIgName']) {
       this.igSelectionFg.controls['selectedIgName'].markAsTouched();
       this.igSelectionFg.controls['selectedIgName'].updateValueAndValidity();
       if (this.igSelectionFg.valid) {
