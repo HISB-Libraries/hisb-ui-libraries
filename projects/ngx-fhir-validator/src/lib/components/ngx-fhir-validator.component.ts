@@ -505,8 +505,6 @@ export class NgxFhirValidatorComponent implements OnInit{
     let igVersion: string = null;
     if(this.igVersionDropdownList?.length == 1){
       igVersion = this.igVersionDropdownList[0];
-    } else {
-      igVersion = igList.filter(el=> el.name == selectedIgName).find(el=> el.version == 'current')?.version;
     }
     this.igSelectionFg.controls['selectedIgVersion'].patchValue(igVersion);
   }
