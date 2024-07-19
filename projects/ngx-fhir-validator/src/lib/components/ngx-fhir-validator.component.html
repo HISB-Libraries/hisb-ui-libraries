@@ -61,7 +61,7 @@
   @if(igList?.length > 1){
     <form [formGroup]="igSelectionFg">
     <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
-      <mat-label>Select IG</mat-label>
+      <mat-label>Select IG Name</mat-label>
       <mat-select formControlName="selectedIgName">
         @for (igName of igNameList; track igName) {
           <mat-option [value]="igName">
@@ -69,8 +69,8 @@
           </mat-option>
         }
       </mat-select>
-      @if (igSelectionFg.invalid) {
-        <mat-error>Select Implementation Guide</mat-error>
+      @if (igSelectionFg.controls?.['selectedIgName']?.errors?.required) {
+        <mat-error>Select IG Name</mat-error>
       }
     </mat-form-field>
 
@@ -83,6 +83,9 @@
           </mat-option>
         }
       </mat-select>
+      @if (igSelectionFg.controls?.['selectedIgVersion']?.errors?.required) {
+        <mat-error>Select IG Version</mat-error>
+      }
     </mat-form-field>
     </form>
   }

@@ -119,11 +119,10 @@ export class NgxFhirValidatorComponent implements OnInit{
         this.igNameList = [...new Set(this.igNameList)];
         this.igVersionList = value.map(el => el.version);
         this.igSelectionFg.addControl('selectedIgName', new FormControl('', Validators.required));
-        this.igSelectionFg.addControl('selectedIgVersion', new FormControl(''));
+        this.igSelectionFg.addControl('selectedIgVersion', new FormControl('',Validators.required));
         this.igSelectionFg.controls['selectedIgName'].valueChanges.subscribe({
           next: value => {
-            this.getIgVersionsList(value, this.igList);
-            this.igSelectionFg.controls['selectedIgVersion'].patchValue('current');
+            this.setIgVersionControl(value, this.igList);
           }
         })
       },
@@ -226,12 +225,10 @@ export class NgxFhirValidatorComponent implements OnInit{
       resourceFormat = this.resourceFormat
     }
 
-    if(this.igSelectionFg.controls?.['selectedIgName']) {
-      this.igSelectionFg.controls['selectedIgName'].markAsTouched();
-      this.igSelectionFg.controls['selectedIgName'].updateValueAndValidity();
-      if (this.igSelectionFg.valid) {
-        this.setSelectedIg(this.igSelectionFg.controls['selectedIgName'].value, this.igSelectionFg.controls['selectedIgVersion'].value);
-      }
+    this.igSelectionFg.markAllAsTouched();
+    this.igSelectionFg.updateValueAndValidity();
+    if (this.igList?.length > 1 && this.igSelectionFg.valid) {
+      this.setSelectedIg(this.igSelectionFg.controls['selectedIgName'].value, this.igSelectionFg.controls['selectedIgVersion'].value);
     }
 
     this.isValidResource = true;
@@ -503,11 +500,15 @@ export class NgxFhirValidatorComponent implements OnInit{
   }
 
 
-  getIgVersionsList(selectedIgName: string, igList: ImplementationGuide[]) {
-    this.igVersionDropdownList = igList.filter(el=> el.name== selectedIgName).map( el=> el.version);
-    this.selectedIgVersion = this.igVersionList.find(el=> el == 'current');
-    this.selectedIG = this.igList.find(el => el.name == selectedIgName && el.version == this.selectedIgVersion);
-    this.igSelectionFg.controls['selectedIgVersion'].patchValue(this.selectedIgVersion);
+  setIgVersionControl(selectedIgName: string, igList: ImplementationGuide[]) {
+    this.igVersionDropdownList = igList.filter(el=> el.name == selectedIgName).map( el=> el.version);
+    let igVersion: string = null;
+    if(this.igVersionDropdownList?.length == 1){
+      igVersion = this.igVersionDropdownList[0];
+    } else {
+      igVersion = igList.filter(el=> el.name == selectedIgName).find(el=> el.version == 'current')?.version;
+    }
+    this.igSelectionFg.controls['selectedIgVersion'].patchValue(igVersion);
   }
 
   setSelectedIg(selectedIgName: string, selectedIgVersion: string) {
