@@ -1,9 +1,9 @@
-import {Inject, Injectable} from '@angular/core';
-import {ValidatorConstants} from "../providers/validator-constants";
+import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {EnvironmentHandlerService} from "../environment-handler.service";
+import {ImplementationGuide} from "../modal/implementation-guide";
 
 @Injectable({
   providedIn: 'root'
@@ -39,10 +39,13 @@ export class FhirValidatorService {
     this._snackBar.dismiss();
   }
 
-  getUiValidationMessages(fhirResource: any, resourceFormat: string): string {
+  getUiValidationMessages(fhirResource: any, resourceFormat: string, selectedIg: ImplementationGuide): string {
 
     if(!fhirResource || (!!fhirResource && Object.keys(fhirResource).length === 0)) {
       return "Please enter a FHIR resource for validation.";
+    }
+    else if(!selectedIg){
+      return "Please select an Implementation Guide";
     }
     else if (resourceFormat === 'json'){
       if(!this.isJson(fhirResource)){
@@ -142,11 +145,7 @@ export class FhirValidatorService {
           {
             "name": "format",
             "valueString": "application/fhir+json"
-          },
-          {
-            "name": "includeFormattedResource",
-            "valueBoolean": true
-          },
+          }
         ]
       }
 
@@ -183,5 +182,9 @@ export class FhirValidatorService {
     return this.http.post(this.serverBaseUrl + "$validate", requestData, {headers: headers}).pipe(map((result: any) => (
       result as Object
     )));
+  }
+
+  getIgList(){
+    return this.http.get(this.serverBaseUrl + "$packages")
   }
 }

@@ -7,7 +7,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {ValidatorConstants} from "../providers/validator-constants";
-import { UntypedFormControl} from "@angular/forms";
+import {FormControl, FormGroup, UntypedFormControl, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {FhirValidatorService} from "../services/fhir-validator.service";
 import {ResponseItem} from "../modal/response-item";
@@ -48,12 +48,12 @@ export class NgxFhirValidatorComponent implements OnInit{
   @Input() buttonTxtColor: string  = 'white';
   @Input() buttonBackgroundColor='#4858B8';
   @Input() exportValidationResultsBtnName: string = 'Export Results (.zip)';
-  @Input({ required: true }) igList: ImplementationGuide[];
 
   @Output() onValidation = new EventEmitter<ValidationResults>();
   @Output() onApiError = new EventEmitter<any>();
   @Output() onResourceContentChanged = new EventEmitter<any>();
   @Output() onExportValidationResults = new EventEmitter<any>();
+  @Input() ig: ImplementationGuide;
 
 
   @ViewChild('validatorInput',{static:false, read: ElementRef}) inputRef: any;
@@ -78,11 +78,19 @@ export class NgxFhirValidatorComponent implements OnInit{
   serverErrorStatus: string = ''; // We store the error response status here (i.e. 404, 500)
   lines : number = 1;
   width : number = 0;
+  igList: ImplementationGuide[] = [];
+  igNameList: string[] = [];
+  igVersionList: string[] = [];
+  selectedIgName: string;
+  selectedIgVersion: string;
+  igVersionDropdownList: string[];
   selectedIG: ImplementationGuide;
 
   //TODO remove this code when the API returns a timeout error
   serverTimoutDetected = false;
   SERVER_TIMEOUT_INTERVAL = 240000; //four minutes
+
+  igSelectionFg = new FormGroup({});
 
   constructor(
     private fhirValidatorService: FhirValidatorService,
@@ -94,7 +102,33 @@ export class NgxFhirValidatorComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.selectedIG = this.igList[0];
+    if(this.ig){
+      this.selectedIG = this.ig;
+    }
+    else{
+      this.getIgList();
+    }
+  }
+
+  getIgList() {
+
+    this.fhirValidatorService.getIgList().subscribe({
+      next: (value: any) => {
+        this.igList = value;
+        this.igNameList = value.map(el => el.name);
+        this.igNameList = [...new Set(this.igNameList)];
+        this.igVersionList = value.map(el => el.version);
+        this.igSelectionFg.addControl('selectedIgName', new FormControl('', Validators.required));
+        this.igSelectionFg.addControl('selectedIgVersion', new FormControl('',Validators.required));
+        this.igSelectionFg.controls['selectedIgName'].valueChanges.subscribe({
+          next: value => {
+            this.setIgVersionControl(value, this.igList);
+          }
+        })
+      },
+      error: err => console.error(err)
+    });
+
   }
 
   formatFhirResource(){
@@ -182,7 +216,7 @@ export class NgxFhirValidatorComponent implements OnInit{
     }
   }
 
-  validateFhirResource(fhirResource?: any, resourceFormat?: string) {
+  validateFhirResource(fhirResource: any, resourceFormat: string) {
     // Set the stage for the validation. Reset variables to default values.
     if(!fhirResource){
       fhirResource = this.fhirResource
@@ -191,9 +225,12 @@ export class NgxFhirValidatorComponent implements OnInit{
       resourceFormat = this.resourceFormat
     }
 
-    if(!fhirResource || !(resourceFormat === 'json' || resourceFormat === 'xml')){
-      console.error("Invalid data passed to the validator.");
+    this.igSelectionFg.markAllAsTouched();
+    this.igSelectionFg.updateValueAndValidity();
+    if (this.igList?.length > 1 && this.igSelectionFg.valid) {
+      this.setSelectedIg(this.igSelectionFg.controls['selectedIgName'].value, this.igSelectionFg.controls['selectedIgVersion'].value);
     }
+
     this.isValidResource = true;
     this.hasResponseData = false;
     this.serverErrorList = [];
@@ -202,16 +239,18 @@ export class NgxFhirValidatorComponent implements OnInit{
     this.serverTimoutDetected = false;
     this.severityLevelsFormControl.patchValue(this.severityLevels);
 
-    this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat);
+    this.validationErrorStr = this.fhirValidatorService.getUiValidationMessages(fhirResource, resourceFormat, this.selectedIG);
+
     if(this.validationErrorStr){
       //see if we can find any obvious issues with the resource here
       this.isValidResource = false;
       this.validationFinished = true;
       this.onValidation.emit({hasBasicErrors: true, isValid: false, resource: fhirResource});
+
     }
     else {
       // The UI validation passed successfully, and we execute the backend validation.
-      this.executeAPIValidation(fhirResource, resourceFormat, this.selectedIG?.valueString);
+      this.executeAPIValidation(fhirResource, resourceFormat, this.selectedIG?.canonicalUrl);
     }
   }
 
@@ -256,7 +295,7 @@ export class NgxFhirValidatorComponent implements OnInit{
 
   // Sends fhir resource to be validated, renders response
 
-  private executeAPIValidation(fhirResource: any, resourceFormat: string, ig?: string) {
+  private executeAPIValidation(fhirResource: any, resourceFormat: string, ig: string) {
     // Reset values to default state prior to validation.
     this.isLoading = true;
     this.parsedFhirResource = '';
@@ -461,4 +500,16 @@ export class NgxFhirValidatorComponent implements OnInit{
   }
 
 
+  setIgVersionControl(selectedIgName: string, igList: ImplementationGuide[]) {
+    this.igVersionDropdownList = igList.filter(el=> el.name == selectedIgName).map( el=> el.version);
+    let igVersion: string = null;
+    if(this.igVersionDropdownList?.length == 1){
+      igVersion = this.igVersionDropdownList[0];
+    }
+    this.igSelectionFg.controls['selectedIgVersion'].patchValue(igVersion);
+  }
+
+  setSelectedIg(selectedIgName: string, selectedIgVersion: string) {
+    this.selectedIG = this.igList.find(el => el.name == selectedIgName && el.version == selectedIgVersion);
+  }
 }
