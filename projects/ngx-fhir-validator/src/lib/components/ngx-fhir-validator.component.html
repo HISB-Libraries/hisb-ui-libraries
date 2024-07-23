@@ -59,18 +59,36 @@
   }
 
   @if(igList?.length > 1){
+    <form [formGroup]="igSelectionFg">
     <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
-      <mat-label>Select IG</mat-label>
-      <mat-select [(value)]="selectedIG">
-        @for (ig of igList; track ig) {
-          <mat-option [value]="ig">
-            {{ig.display}}
+      <mat-label>Select IG Name</mat-label>
+      <mat-select formControlName="selectedIgName">
+        @for (igName of igNameList; track igName) {
+          <mat-option [value]="igName">
+            {{ igName }}
           </mat-option>
         }
       </mat-select>
+      @if (igSelectionFg.controls?.['selectedIgName']?.errors?.required) {
+        <mat-error>Select IG Name</mat-error>
+      }
     </mat-form-field>
-  }
 
+    <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
+      <mat-label>Select IG Version</mat-label>
+      <mat-select [disabled]="!selectedIgName" formControlName="selectedIgVersion">
+        @for (igVersion of igVersionDropdownList; track igVersion) {
+          <mat-option [value]="igVersion">
+            {{igVersion}}
+          </mat-option>
+        }
+      </mat-select>
+      @if (igSelectionFg.controls?.['selectedIgVersion']?.errors?.required) {
+        <mat-error>Select IG Version</mat-error>
+      }
+    </mat-form-field>
+    </form>
+  }
 
   @if (validationInputFormat?.format == 'xml and json') {
     <span class="content-spacer"></span>
@@ -109,7 +127,7 @@
     rows="30"
     [(ngModel)]="fhirResource"
     (ngModelChange)="onResourceContentChanged.emit(fhirResource)"
-    [ngStyle]="{'border-color': (!!validationErrorStr) ? 'red': null }"
+    [ngStyle]="{'border-color': (!!validationErrorStr && validationErrorStr != 'Please select an Implementation Guide') ? 'red': null }"
     (paste)="onPasteFhirResource($event)"
     [disabled]="isLoading"
     (input)="lineNumbers()"
