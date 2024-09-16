@@ -12,12 +12,15 @@ import {MatIconModule} from "@angular/material/icon";
 import { HeaderComponent } from './components/header/header.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import {NgxHisbCommonUiTesterModule} from "./test-modules/ngx-hisb-common-ui-tester/ngx-hisb-common-ui-tester.module";
+import { CommonNavMenuTesterComponent } from './test-modules/ngx-hisb-common-ui-tester/components/common-nav-menu-tester/common-nav-menu-tester.component';
+import {NavMenuComponent} from "ngx-hisb-common-ui";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    CommonNavMenuTesterComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ import {NgxHisbCommonUiTesterModule} from "./test-modules/ngx-hisb-common-ui-tes
     HisbLoggerTesterModule,
     MatToolbarModule,
     MatIconModule,
-    NgxHisbCommonUiTesterModule
+    NgxHisbCommonUiTesterModule,
+    NavMenuComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
