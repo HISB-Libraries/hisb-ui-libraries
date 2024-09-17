@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {OptionConfig} from "./option.config";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -85,7 +85,6 @@ export class NavMenuComponent implements  OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['options'].currentValue){
-      console.log("After view Init");
       this.currentRouteStr$.subscribe( currentRoute =>{
         const index = this.options.options.findIndex(option=> option.routerLink ==currentRoute)
         if(index >= 0 ){
