@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {OptionConfig} from "./option.config";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -7,7 +7,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 
 import {NavigationEnd, Router, RouterLink} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
-import {filter, take} from "rxjs";
+import {BehaviorSubject, filter, take} from "rxjs";
 
 
 @Component({
@@ -24,7 +24,7 @@ import {filter, take} from "rxjs";
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })
-export class NavMenuComponent implements  AfterViewInit {
+export class NavMenuComponent implements  OnChanges{
   @Input() backgroundColor: string = "#646064";
   @Input() contrastColor: string = "white";
   @Input() options: OptionConfig = {options: []};
@@ -32,6 +32,10 @@ export class NavMenuComponent implements  AfterViewInit {
 
   expanded: boolean = true;
   selectedOption = 0;
+
+  private currentRouteStr = new BehaviorSubject<string>('');
+  currentRouteStr$ = this.currentRouteStr.asObservable();
+
 
   constructor(private router: Router) {
     // To grab the router events immediately we need to subscribe to them in the constructor
@@ -53,6 +57,7 @@ export class NavMenuComponent implements  AfterViewInit {
     ).subscribe(event => {
       if(event?.['url']){
         this.currentRoute = this.extractPath(event?.['url']);
+        this.currentRouteStr.next(this.currentRoute);
       }
     })
   }
@@ -78,12 +83,14 @@ export class NavMenuComponent implements  AfterViewInit {
     }
   }
 
-  ngAfterViewInit(): void {
-    // Now that we have the options object, we select the current route using the this.currentRoute variable.
-    // Note that this will be executed only one time when the page is loaded.
-    const index = this.options.options.findIndex(option=> option.routerLink == this.currentRoute);
-    if(index >= 0 ){
-      this.selectedOption = index
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['options'].currentValue){
+      console.log("After view Init");
+      this.currentRouteStr$.subscribe( currentRoute =>{
+        const index = this.options.options.findIndex(option=> option.routerLink ==currentRoute)
+        if(index >= 0 ){
+          this.selectedOption = index
+        }})
     }
   }
 
