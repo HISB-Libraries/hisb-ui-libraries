@@ -7,7 +7,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 
 import {NavigationEnd, Router, RouterLink} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
-import {filter, take, tap} from "rxjs";
+import {filter, take} from "rxjs";
 
 
 @Component({
@@ -62,7 +62,7 @@ export class NavMenuComponent implements  AfterViewInit {
    * @param inputString
    * @private
    */
-  private extractPath(inputString) {
+  private extractPath(inputString: string) {
     const firstSlashIndex = inputString.indexOf('/');
 
     if (firstSlashIndex === -1) {
@@ -79,7 +79,8 @@ export class NavMenuComponent implements  AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    //Now that we have the options object, we select the current route using the this.currentRoute variable
+    // Now that we have the options object, we select the current route using the this.currentRoute variable.
+    // Note that this will be executed only one time when the page is loaded.
     const index = this.options.options.findIndex(option=> option.routerLink == this.currentRoute);
     if(index >= 0 ){
       this.selectedOption = index
