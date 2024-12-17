@@ -11,17 +11,17 @@ import {BehaviorSubject, filter, take} from "rxjs";
 
 
 @Component({
-  standalone: true,
-    imports: [
+  imports: [
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
     MatTooltipModule,
     RouterLink,
     MatMenuModule
-],
+  ],
   selector: 'common-nav-menu',
   templateUrl: './nav-menu.component.html',
+  standalone: true,
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent implements  OnChanges{

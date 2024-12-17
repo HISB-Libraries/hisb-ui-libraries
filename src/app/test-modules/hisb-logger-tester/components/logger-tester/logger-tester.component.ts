@@ -4,9 +4,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
-  selector: 'app-logger-tester',
-  templateUrl: './logger-tester.component.html',
-  styleUrls: ['./logger-tester.component.scss']
+    selector: 'app-logger-tester',
+    templateUrl: './logger-tester.component.html',
+    styleUrls: ['./logger-tester.component.scss'],
+    standalone: false
 })
 
 export class LoggerTesterComponent implements OnInit{

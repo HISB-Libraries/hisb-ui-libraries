@@ -11,7 +11,7 @@ import {DialogData} from "../domain/dialog-data";
   imports: [
     MatDialogModule,
     MatButtonModule
-]
+  ]
 })
 export class ConformationDialogComponent implements OnInit {
 

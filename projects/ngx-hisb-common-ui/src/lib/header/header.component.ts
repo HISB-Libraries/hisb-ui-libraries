@@ -10,7 +10,6 @@ import {MatDividerModule} from "@angular/material/divider";
 import {BrowserModule} from "@angular/platform-browser";
 
 @Component({
-  standalone: true,
   imports: [
     MatButtonModule,
     MatToolbarModule,
@@ -19,9 +18,10 @@ import {BrowserModule} from "@angular/platform-browser";
     RouterLink,
     MatDividerModule,
     BrowserModule
-],
+  ],
   selector: 'common-header',
   styleUrls: ['./header.component.css'],
+  standalone: true,
   templateUrl: 'header.component.html'
 })
 export class HeaderComponent implements OnInit {

@@ -8,11 +8,10 @@ import {BrowserModule} from "@angular/platform-browser";
   imports: [
     MatButtonModule,
     BrowserModule
-],
+  ],
   selector: 'lib-common-error',
   templateUrl: './common-error.component.html',
   styleUrls: ['./common-error.component.scss'],
-
 })
 export class CommonErrorComponent {
   @Input() errorCode: string | number;
