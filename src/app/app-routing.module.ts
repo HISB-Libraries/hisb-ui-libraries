@@ -9,6 +9,9 @@ import {DialogTesterComponent} from "./test-modules/ngx-hisb-common-ui-tester/co
 import {
   CommonErrorTesterComponent
 } from "./test-modules/ngx-hisb-common-ui-tester/components/common-error-tester/common-error-tester.component";
+import {
+  CommonNavMenuTesterComponent
+} from "./test-modules/ngx-hisb-common-ui-tester/components/common-nav-menu-tester/common-nav-menu-tester.component";
 
 const routes: Routes = [
   {
@@ -30,6 +33,10 @@ const routes: Routes = [
   {
     path: 'common-error',
     component: CommonErrorTesterComponent,
+  },
+  {
+    path: 'common-nav-menu',
+    component: CommonNavMenuTesterComponent,
   },
 ];
 
