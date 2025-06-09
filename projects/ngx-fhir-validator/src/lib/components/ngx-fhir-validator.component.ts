@@ -19,16 +19,17 @@ import {ImplementationGuide} from "../modal/implementation-guide";
 
 export type SubmitButtonAlignment = 'left' | 'right';
 @Component({
-  selector: 'lib-ngx-fhir-validator',
-  templateUrl: 'ngx-fhir-validator.component.html',
-  styleUrls: ['ngx-fhir-validator.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+    selector: 'lib-ngx-fhir-validator',
+    templateUrl: 'ngx-fhir-validator.component.html',
+    styleUrls: ['ngx-fhir-validator.component.scss'],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
+    standalone: false
 })
 
 
@@ -191,7 +192,7 @@ export class NgxFhirValidatorComponent implements OnInit{
         // auto toggle the file type radio buttons
         if (file.type === "text/xml") {
           this.resourceFormat = 'xml';
-        } else if ("application/json") {
+        } else if (file.type === "application/json") {
           this.resourceFormat = 'json';
         }
 

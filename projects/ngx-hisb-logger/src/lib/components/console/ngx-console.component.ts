@@ -2,9 +2,10 @@ import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from 
 import {LogLine} from "../../modal/log-line";
 
 @Component({
-  selector: 'ngx-console',
-  templateUrl: './ngx-console.component.html',
-  styleUrls: ['./ngx-console.component.css']
+    selector: 'ngx-console',
+    templateUrl: './ngx-console.component.html',
+    styleUrls: ['./ngx-console.component.css'],
+    standalone: false
 })
 export class NgxConsoleComponent implements OnChanges{
   @ViewChild('terminal') private myScrollContainer: ElementRef;

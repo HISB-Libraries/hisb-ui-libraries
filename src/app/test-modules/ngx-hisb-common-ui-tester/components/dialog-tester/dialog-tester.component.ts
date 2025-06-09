@@ -4,9 +4,10 @@ import {Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-dialog-tester',
-  templateUrl: './dialog-tester.component.html',
-  styleUrls: ['./dialog-tester.component.scss']
+    selector: 'app-dialog-tester',
+    templateUrl: './dialog-tester.component.html',
+    styleUrls: ['./dialog-tester.component.scss'],
+    standalone: false
 })
 export class DialogTesterComponent {
   constructor(

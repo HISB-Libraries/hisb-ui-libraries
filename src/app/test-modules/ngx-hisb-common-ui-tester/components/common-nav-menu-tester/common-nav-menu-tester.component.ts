@@ -81,9 +81,10 @@ class Module {
 }
 
 @Component({
-  selector: 'app-common-nav-menu-tester',
-  templateUrl: './common-nav-menu-tester.component.html',
-  styleUrl: './common-nav-menu-tester.component.scss'
+    selector: 'app-common-nav-menu-tester',
+    templateUrl: './common-nav-menu-tester.component.html',
+    styleUrl: './common-nav-menu-tester.component.scss',
+    standalone: false
 })
 export class CommonNavMenuTesterComponent implements OnInit{
   optionConfig: OptionConfig;

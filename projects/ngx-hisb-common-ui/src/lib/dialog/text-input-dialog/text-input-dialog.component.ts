@@ -14,17 +14,17 @@ import {MatInputModule} from "@angular/material/input";
 import {TextInputDialogData} from "../domain/text-input-dialog-data";
 
 @Component({
-  selector: 'lib-text-input-dialog',
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatDialogModule,
-    MatInputModule
-],
-  templateUrl: './text-input-dialog.component.html',
-  styleUrls: ['./text-input-dialog.component.css']
+    selector: 'lib-text-input-dialog',
+    imports: [
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatDialogModule,
+        MatInputModule
+    ],
+    templateUrl: './text-input-dialog.component.html',
+    styleUrls: ['./text-input-dialog.component.css'],
+    standalone: true
 })
 
 export class TextInputDialogComponent implements OnInit, AfterViewInit {

@@ -4,9 +4,10 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 
 
 @Component({
-  selector: 'app-fhir-validator-tester',
-  templateUrl: './fhir-validator-tester.component.html',
-  styleUrls: ['./fhir-validator-tester.component.scss']
+    selector: 'app-fhir-validator-tester',
+    templateUrl: './fhir-validator-tester.component.html',
+    styleUrls: ['./fhir-validator-tester.component.scss'],
+    standalone: false
 })
 
 export class FhirValidatorTesterComponent implements  OnInit {
