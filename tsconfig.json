@@ -23,7 +23,7 @@
       ],
       "ngx-hisb-logger": [
         "dist/ngx-hisb-logger"
-      ],
+      ]
     },
     "declaration": false,
     "downlevelIteration": true,
