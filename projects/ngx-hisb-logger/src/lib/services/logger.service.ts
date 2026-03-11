@@ -1,52 +1,54 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject} from "rxjs";
+import {inject, Injectable, signal} from '@angular/core';
 import {LogLevel} from "../modal/log-level";
 import {LogLine} from "../modal/log-line";
-import { Clipboard } from '@angular/cdk/clipboard';
+import {Clipboard} from '@angular/cdk/clipboard';
+
 @Injectable({
   providedIn: 'root'
 })
 export class LoggerService {
-  constructor(private clipboard: Clipboard){
+  private clipboard = inject(Clipboard);
+
+  private _logs = signal<LogLine[]>([]);
+
+  readonly logs = this._logs.asReadonly();
+
+  private log(line: LogLine): void {
+    this._logs.update(logs => [...logs, line]);
   }
 
-
-  private logStream = new BehaviorSubject<LogLine[]>([]);
-  logStream$ = this.logStream.asObservable();
-  private log(line: LogLine) {
-    this.logStream.next(this.logStream.value.concat(line));
-  }
-
-  debug(msg: string, source: string) {
+  debug(msg: string, source: string): void {
     const line: LogLine = new LogLine(msg, LogLevel.Debug, source);
     this.log(line);
   }
 
-  info(msg: string, source: string) {
+  info(msg: string, source: string): void {
     const line: LogLine = new LogLine(msg, LogLevel.Info, source);
     this.log(line);
   }
 
-  warn(msg: string, source: string) {
+  warn(msg: string, source: string): void {
     const line: LogLine = new LogLine(msg, LogLevel.Warn, source);
     this.log(line);
   }
 
-  error(msg: string, source: string) {
+  error(msg: string, source: string): void {
     const line: LogLine = new LogLine(msg, LogLevel.Error, source);
     this.log(line);
   }
 
-  clear() {
-    this.logStream.next([])
+  clear(): void {
+    this._logs.set([]);
   }
 
   /**
-   * Copy the content to from the log to a clipboard.
+   * Copy the content from the log to a clipboard.
    * Presently the format we use is 'timestamp - log level - source (this is currently the source of the class) - message'
    */
-  copyLogs(){
-    const logs= this.logStream.value.map(logLine=> `${logLine.timeStamp} - ${logLine.level} -${logLine.source} - ${logLine.line}`).join("\n");
+  copyLogs(): void {
+    const logs = this._logs().map(logLine =>
+      `${logLine.timeStamp} - ${logLine.level} - ${logLine.source} - ${logLine.line}`
+    ).join("\n");
     this.clipboard.copy(logs);
   }
 }

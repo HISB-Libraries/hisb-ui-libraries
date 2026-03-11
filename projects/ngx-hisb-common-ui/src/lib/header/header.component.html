@@ -14,7 +14,7 @@
         Version: {{ version }}
       </div>
     }
-    @if (configuration?.menuItem) {
+    @if (configuration()?.menuItem) {
       <div>
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
           <mat-icon>more_vert</mat-icon>
@@ -31,7 +31,7 @@
   </mat-toolbar-row>
 
   <mat-menu #menu="matMenu">
-    @for (item of configuration?.menuItem; track item) {
+    @for (item of configuration()?.menuItem; track item) {
 
       @if (item.divider) {
         <mat-divider></mat-divider>

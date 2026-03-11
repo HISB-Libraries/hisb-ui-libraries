@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core';
 import {HeaderConfig} from "./header.config";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -22,28 +22,27 @@ import {BrowserModule} from "@angular/platform-browser";
   selector: 'common-header',
   styleUrls: ['./header.component.css'],
   standalone: true,
-  templateUrl: 'header.component.html'
+  templateUrl: 'header.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
-  @Input() configuration: HeaderConfig | undefined;
-  @Input() title: string = "";
-  @Input() version: string = "";
-  @Input() subtitle: string = "";
-  @Input() splitSubtitleEvenly: boolean = false;
-  @Input() showUserManagement: boolean = false;
-  @Input() backgroundColor: string = "#646064";
-  subtitleInsert: any = undefined;
+export class HeaderComponent {
+  // Signal inputs
+  configuration = input<HeaderConfig | undefined>();
+  title = input<string>("");
+  version = input<string>("");
+  subtitle = input<string>("");
+  splitSubtitleEvenly = input<boolean>(false);
+  showUserManagement = input<boolean>(false);
+  backgroundColor = input<string>("#646064");
 
-  constructor() {}
-
-  ngOnInit(): void {
-    if (this.splitSubtitleEvenly) {
-      this.subtitleInsert = this.splitSubtitle(this.subtitle);
+  // Computed signal for subtitle - replaces ngOnInit logic
+  subtitleInsert = computed(() => {
+    if (this.splitSubtitleEvenly()) {
+      return this.splitSubtitle(this.subtitle());
+    } else {
+      return this.subtitle();
     }
-    else {
-      this.subtitleInsert = this.subtitle;
-    }
-  }
+  });
 
   private splitSubtitle(subtitle: string): string {
     const subtitleWordList = subtitle.split(" ");
@@ -55,10 +54,10 @@ export class HeaderComponent implements OnInit {
         recombinedSubtitle += "<br>";
       }
     });
-    return recombinedSubtitle
+    return recombinedSubtitle;
   }
 
-  openLink(link: string | undefined) {
-    if (link) window.open(link,'_blank');
+  openLink(link: string | undefined): void {
+    if (link) window.open(link, '_blank');
   }
 }
