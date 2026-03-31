@@ -1,9 +1,10 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
-  Input, OnInit,
-  Output,
+  input,
+  OnInit,
+  output,
+  signal,
   ViewChild
 } from '@angular/core';
 import {ValidatorConstants} from "../providers/validator-constants";
@@ -34,32 +35,32 @@ export type SubmitButtonAlignment = 'left' | 'right';
 
 
 export class NgxFhirValidatorComponent implements OnInit{
-  @Input() validatorTitle: string = '';
-  @Input() validationResultsExpanded: boolean = false; // Validation results details initial state
-  @Input() resultDetailsExpandBtnShown: boolean = true; // Show/hide Expand Validation Results btn
-  @Input() formatResourceBtnShown: boolean = false; // Show/hide Format Resource btn
-  @Input() clearValidatorBtnShown: boolean = true; // Show/hide Clear Validator btn
-  @Input() submitBtnShown: boolean = true; // Show/hide Submit btn
-  @Input() exportResultsButtonShown = true;
-  @Input() submitBtnTitle: string = 'Submit'; //The submit button title. "Submit" is generic name and other apps may want to change it
-  @Input() validationInputFormat: ValidatorInput = {format: 'json', accepts: '.json'};
-  @Input() maxFileSize = 250000 // Max allowed file size is 250KB
-  @Input() submitBtnAlignment: SubmitButtonAlignment = 'right'; // The default location for the Submit btn
-  @Input() cancelValidationBtnShown: boolean = true;
-  @Input() buttonTxtColor: string  = 'white';
-  @Input() buttonBackgroundColor='#4858B8';
-  @Input() exportValidationResultsBtnName: string = 'Export Results (.zip)';
+  validatorTitle = input<string>('');
+  validationResultsExpanded = input<boolean>(false); // Validation results details initial state
+  resultDetailsExpandBtnShown = input<boolean>(true); // Show/hide Expand Validation Results btn
+  formatResourceBtnShown = input<boolean>(false); // Show/hide Format Resource btn
+  clearValidatorBtnShown = input<boolean>(true); // Show/hide Clear Validator btn
+  submitBtnShown = input<boolean>(true); // Show/hide Submit btn
+  exportResultsButtonShown = input<boolean>(true);
+  submitBtnTitle = input<string>('Submit'); //The submit button title. "Submit" is generic name and other apps may want to change it
+  validationInputFormat = input<ValidatorInput>({format: 'json', accepts: '.json'});
+  maxFileSize = input<number>(250000); // Max allowed file size is 250KB
+  submitBtnAlignment = input<SubmitButtonAlignment>('right'); // The default location for the Submit btn
+  cancelValidationBtnShown = input<boolean>(true);
+  buttonTxtColor = input<string>('white');
+  buttonBackgroundColor = input<string>('#4858B8');
+  exportValidationResultsBtnName = input<string>('Export Results (.zip)');
+  ig = input<ImplementationGuide | undefined>(undefined);
 
-  @Output() onValidation = new EventEmitter<ValidationResults>();
-  @Output() onApiError = new EventEmitter<any>();
-  @Output() onResourceContentChanged = new EventEmitter<any>();
-  @Output() onExportValidationResults = new EventEmitter<any>();
-  @Input() ig: ImplementationGuide;
+  onValidation = output<ValidationResults>();
+  onApiError = output<any>();
+  onResourceContentChanged = output<any>();
+  onExportValidationResults = output<any>();
 
 
   @ViewChild('validatorInput',{static:false, read: ElementRef}) inputRef: any;
 
-  apiResponse: ApiResponse | null;
+  apiResponse = signal<ApiResponse | null>(null);
   fhirResource: string = ''// The Resource.
   resourceFormat = 'json'; // The resource format could be JSON or XML, with JSON being the default format.
   fileName: string = ''; // Name of the file uploaded by the user. We need this to render the filename in the UI.
@@ -79,13 +80,14 @@ export class NgxFhirValidatorComponent implements OnInit{
   serverErrorStatus: string = ''; // We store the error response status here (i.e. 404, 500)
   lines : number = 1;
   width : number = 0;
-  igList: ImplementationGuide[] = [];
+  igList = signal<ImplementationGuide[]>([]);
   igNameList: string[] = [];
   igVersionList: string[] = [];
   selectedIgName: string;
   selectedIgVersion: string;
   igVersionDropdownList: string[];
   selectedIG: ImplementationGuide;
+  localResultDetailsExpanded: boolean = true; // Local state for expand/collapse button
 
   //TODO remove this code when the API returns a timeout error
   serverTimoutDetected = false;
@@ -99,12 +101,24 @@ export class NgxFhirValidatorComponent implements OnInit{
     this.displayedColumns = ValidatorConstants.DISPLAYED_COLUMNS;
     this.severityLevelsFormControl = new UntypedFormControl(this.severityLevels);
     this.dataSource = new MatTableDataSource<any[]>();
-    this.apiResponse = null;
+    // Initialize form controls to prevent "unrecognized form control" errors
+    this.igSelectionFg.addControl('selectedIgName', new FormControl('', Validators.required));
+    this.igSelectionFg.addControl('selectedIgVersion', new FormControl('', Validators.required));
+
+    // Set up valueChanges subscription
+    this.igSelectionFg.controls['selectedIgName'].valueChanges.subscribe({
+      next: value => {
+        this.setIgVersionControl(value, this.igList());
+      }
+    });
   }
 
   ngOnInit(): void {
-    if(this.ig){
-      this.selectedIG = this.ig;
+    // Initialize local state from input signal
+    this.localResultDetailsExpanded = this.resultDetailsExpandBtnShown();
+
+    if(this.ig()){
+      this.selectedIG = this.ig()!;
     }
     else{
       this.getIgList();
@@ -112,24 +126,15 @@ export class NgxFhirValidatorComponent implements OnInit{
   }
 
   getIgList() {
-
     this.fhirValidatorService.getIgList().subscribe({
       next: (value: any) => {
-        this.igList = value;
+        this.igList.set(value);
         this.igNameList = value.map(el => el.name);
         this.igNameList = [...new Set(this.igNameList)];
         this.igVersionList = value.map(el => el.version);
-        this.igSelectionFg.addControl('selectedIgName', new FormControl('', Validators.required));
-        this.igSelectionFg.addControl('selectedIgVersion', new FormControl('',Validators.required));
-        this.igSelectionFg.controls['selectedIgName'].valueChanges.subscribe({
-          next: value => {
-            this.setIgVersionControl(value, this.igList);
-          }
-        })
       },
       error: err => console.error(err)
     });
-
   }
 
   formatFhirResource(){
@@ -184,9 +189,9 @@ export class NgxFhirValidatorComponent implements OnInit{
     const file: File = event.target.files[0];
 
     if (file) {
-      if(file.size > this.maxFileSize){
+      if(file.size > this.maxFileSize()){
         console.error("File too big")
-        this.fhirValidatorService.showErrorMessage("This file exceeds " + this.maxFileSize /  1000 + "kb and cannot be processed");
+        this.fhirValidatorService.showErrorMessage("This file exceeds " + this.maxFileSize() /  1000 + "kb and cannot be processed");
       }
       else {
         // auto toggle the file type radio buttons
@@ -228,7 +233,7 @@ export class NgxFhirValidatorComponent implements OnInit{
 
     this.igSelectionFg.markAllAsTouched();
     this.igSelectionFg.updateValueAndValidity();
-    if (this.igList?.length > 1 && this.igSelectionFg.valid) {
+    if (this.igList()?.length > 1 && this.igSelectionFg.valid) {
       this.setSelectedIg(this.igSelectionFg.controls['selectedIgName'].value, this.igSelectionFg.controls['selectedIgVersion'].value);
     }
 
@@ -301,7 +306,7 @@ export class NgxFhirValidatorComponent implements OnInit{
     this.isLoading = true;
     this.parsedFhirResource = '';
     this.validationFinished = false;
-    this.apiResponse = null;
+    this.apiResponse.set(null);
 
     if(this.resourceFormat === "json"){
       fhirResource = JSON.parse(fhirResource);
@@ -347,8 +352,11 @@ export class NgxFhirValidatorComponent implements OnInit{
           });
 
           this.dataSource.filterPredicate = this.getFilterPredicate();
-          this.apiResponse = response;
-          this.apiResponse!.formattedResource = response?.extension?.[0]?.valueString;
+          const apiResponseWithFormatted = {
+            ...response,
+            formattedResource: response?.extension?.[0]?.valueString
+          };
+          this.apiResponse.set(apiResponseWithFormatted);
         },
         error: (err) => {
           this.isLoading = false;
@@ -463,24 +471,24 @@ export class NgxFhirValidatorComponent implements OnInit{
     this.serverErrorList = [];
     this.serverErrorStatus = '';
     this.serverTimoutDetected = false;
-    this.apiResponse = null;
+    this.apiResponse.set(null);
   }
 
   getLineItemClass(item: string, i: number) {
 
-    if(this.getLineNumbersBySeverity(this.apiResponse, 'error').indexOf(i) != -1){
+    if(this.getLineNumbersBySeverity(this.apiResponse(), 'error').indexOf(i) != -1){
       this.hasResponseData = true;
       return "error-mark";
     }
-    else if(this.getLineNumbersBySeverity(this.apiResponse, 'warning').indexOf(i) != -1){
+    else if(this.getLineNumbersBySeverity(this.apiResponse(), 'warning').indexOf(i) != -1){
       this.hasResponseData = true;
       return "warning-mark";
     }
-    else if(this.getLineNumbersBySeverity(this.apiResponse, 'information').indexOf(i) != -1){
+    else if(this.getLineNumbersBySeverity(this.apiResponse(), 'information').indexOf(i) != -1){
       this.hasResponseData = true;
       return "info-mark";
     }
-    else if(this.getLineNumbersBySeverity(this.apiResponse, 'note').indexOf(i) != -1){
+    else if(this.getLineNumbersBySeverity(this.apiResponse(), 'note').indexOf(i) != -1){
       this.hasResponseData = true;
       return "note-mark";
     }
@@ -492,7 +500,7 @@ export class NgxFhirValidatorComponent implements OnInit{
   exportValidationResults() {
     // Add the formatted resource form the validator response to a json file
     // This way the line numbers from the validator report will match the json file numbers
-    const jsonResource = this?.apiResponse?.formattedResource || '';
+    const jsonResource = this.apiResponse()?.formattedResource || '';
     // Create a pdf report
     const resultsData = this.dataSource.data
       .map(element=> { return {severity: element.severity, diagnostics: element.diagnostics, location: element.location, fhirPath: element?.expression?.[0]}})
@@ -511,6 +519,6 @@ export class NgxFhirValidatorComponent implements OnInit{
   }
 
   setSelectedIg(selectedIgName: string, selectedIgVersion: string) {
-    this.selectedIG = this.igList.find(el => el.name == selectedIgName && el.version == selectedIgVersion);
+    this.selectedIG = this.igList().find(el => el.name == selectedIgName && el.version == selectedIgVersion);
   }
 }

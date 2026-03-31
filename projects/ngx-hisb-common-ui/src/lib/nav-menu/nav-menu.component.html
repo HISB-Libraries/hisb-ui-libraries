@@ -1,6 +1,6 @@
-<div class="menu-wrapper" [style.background-color]="backgroundColor" [style.width]="expanded ? '100px' : '50px'">
+<div class="menu-wrapper" [style.background-color]="backgroundColor()" [style.width]="expanded() ? '100px' : '50px'">
   <mat-toolbar color=primary>
-    <mat-toolbar-row [style.background-color]="backgroundColor" [style.padding]="'0 0 0 0'">
+    <mat-toolbar-row [style.background-color]="backgroundColor()" [style.padding]="'0 0 0 0'">
       <div class="menu-button-wrapper">
         <button mat-icon-button aria-label="Menu" (click)="toggleSize()">
           <mat-icon>menu</mat-icon>
@@ -11,20 +11,20 @@
 
   <div class="vertical-spacer"></div>
 
-  @for (item of options.options; track item; let i = $index) {
+  @for (item of options().options; track item; let i = $index) {
     <div class="option-wrapper"
-      [style.background-color]="i === selectedOption ? contrastColor : backgroundColor "
-      [style.color]="i === selectedOption ?  backgroundColor : contrastColor"
+      [style.background-color]="i === selectedOption() ? contrastColor() : backgroundColor() "
+      [style.color]="i === selectedOption() ?  backgroundColor() : contrastColor()"
       (click)="select(i)"
       matTooltip="{{item.label}}"
       matTooltipPosition="after"
-      [matTooltipDisabled]="expanded"
+      [matTooltipDisabled]="expanded()"
       [routerLink]="item.routerLink"
       >
-      <mat-icon [class]="expanded? 'scaled-icon' : 'small-icon'" svgIcon="{{item.iconName}}">
+      <mat-icon [class]="expanded()? 'scaled-icon' : 'small-icon'" svgIcon="{{item.iconName}}">
       </mat-icon>
       <br>
-        @if (expanded) {
+        @if (expanded()) {
           <span class="icon-label-large">{{item.label}}</span>
         }
       </div>

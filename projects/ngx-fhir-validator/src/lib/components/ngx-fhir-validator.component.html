@@ -41,7 +41,7 @@
 <div class="row-button-wrapper">
 
   <!--Select JSON/XML radio group-->
-  @if (validationInputFormat.format == 'xml and json') {
+  @if (validationInputFormat().format == 'xml and json') {
     <mat-radio-group [(ngModel)]="resourceFormat" [disabled]=isLoading >
       <mat-radio-button
         value="json"
@@ -58,7 +58,7 @@
     </mat-radio-group>
   }
 
-  @if(igList?.length > 1){
+  @if(igList()?.length > 1){
     <form [formGroup]="igSelectionFg">
     <mat-form-field appearance="outline" class="margin-left-md margin-top-md margin-right-md">
       <mat-label>Select IG Name</mat-label>
@@ -90,27 +90,27 @@
     </form>
   }
 
-  @if (validationInputFormat?.format == 'xml and json') {
+  @if (validationInputFormat()?.format == 'xml and json') {
     <span class="content-spacer"></span>
   }
 
   <!--File upload widget-->
   <input type="file" class="file-input" (click)="fileUpload.value=null"
-    [accept]="validationInputFormat?.accepts?.toString()"
+    [accept]="validationInputFormat()?.accepts?.toString()"
     (change)="onFileSelected($event)" #fileUpload>
 
-  @if (validationInputFormat.format == 'xml and json') {
+  @if (validationInputFormat().format == 'xml and json') {
     <span class="filename">{{fileName}}</span>
   }
 
-  <button mat-raised-button [style.background-color]="buttonBackgroundColor" [style.color]="buttonTxtColor"
+  <button mat-raised-button [style.background-color]="buttonBackgroundColor()" [style.color]="buttonTxtColor()"
     class="upload-btn"
     (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
     <mat-icon>upload</mat-icon>
     Upload
   </button>
 
-  @if (!(validationInputFormat.format == 'xml and json')) {
+  @if (!(validationInputFormat().format == 'xml and json')) {
     <span class="filename">{{fileName}}</span>
   }
 </div>
@@ -137,20 +137,20 @@
 </div>
 
 <!--Actions available below the FHIR validator input textarea-->
-@if (formatResourceBtnShown || clearValidatorBtnShown || submitBtnShown || validationErrorStr) {
+@if (formatResourceBtnShown() || clearValidatorBtnShown() || submitBtnShown() || validationErrorStr) {
   <div class="row-button-wrapper">
-    @if (submitBtnShown && (submitBtnAlignment=='left') && !isLoading) {
+    @if (submitBtnShown() && (submitBtnAlignment()=='left') && !isLoading) {
       <span>
-        <button mat-raised-button [style.background-color]="buttonBackgroundColor" [style.color]="buttonTxtColor" class="button"
+        <button mat-raised-button [style.background-color]="buttonBackgroundColor()" [style.color]="buttonTxtColor()" class="button"
           (click)="validateFhirResource(fhirResource, resourceFormat)">
           <mat-icon>send</mat-icon>
           Submit
         </button>
       </span>
     }
-    @if (formatResourceBtnShown && !isLoading) {
-      <button [ngClass]="{'left-margin-spacer': submitBtnAlignment=='left'}" mat-raised-button
-        [style.background-color]="buttonBackgroundColor" [style.color]="buttonTxtColor"
+    @if (formatResourceBtnShown() && !isLoading) {
+      <button [ngClass]="{'left-margin-spacer': submitBtnAlignment()=='left'}" mat-raised-button
+        [style.background-color]="buttonBackgroundColor()" [style.color]="buttonTxtColor()"
         (click)="onFormatInput();"
         [disabled]="!fhirResource">
         <mat-icon>code</mat-icon>
@@ -169,7 +169,7 @@
       </span>
     }
     <span class="content-spacer"></span>
-    @if (clearValidatorBtnShown && !isLoading) {
+    @if (clearValidatorBtnShown() && !isLoading) {
       <button
         mat-raised-button color="success" class="button"
         (click)="onClear()">
@@ -177,19 +177,19 @@
         Clear Validator
       </button>
     }
-    @if (submitBtnShown && (submitBtnAlignment =='right') && !isLoading) {
+    @if (submitBtnShown() && (submitBtnAlignment() =='right') && !isLoading) {
       <span class="left-margin-spacer">
         <button mat-raised-button color="accent" class="button"
           (click)="validateFhirResource(fhirResource, resourceFormat)">
           <mat-icon>send</mat-icon>
-          {{ submitBtnTitle}}
+          {{ submitBtnTitle()}}
         </button>
       </span>
     }
   </div>
 }
 
-@if (isLoading && cancelValidationBtnShown) {
+@if (isLoading && cancelValidationBtnShown()) {
   <div class="row-button-wrapper padding-top-md">
     <span class="content-spacer"></span>
     <button mat-raised-button color="warn" (click)="onCancelValidation()">
@@ -201,7 +201,7 @@
 
 <!-- Actions available after validator has processed data-->
 
-@if (apiResponse?.issue && !isLoading) {
+@if (apiResponse()?.issue && !isLoading) {
   <div>
     <div class="padding-top-md">
       <div (click)="onFilterResults()">
@@ -237,24 +237,24 @@
           }
         </mat-button-toggle-group>
       </div>
-      @if (validationResultsExpanded) {
+      @if (validationResultsExpanded()) {
         <div class="padding-top-md box">
-          @if (!resultDetailsExpandBtnShown) {
-            <button mat-raised-button color=primary (click)="resultDetailsExpandBtnShown = true">
+          @if (!localResultDetailsExpanded) {
+            <button mat-raised-button color=primary (click)="localResultDetailsExpanded = true">
               <mat-icon>expand_more</mat-icon> Expand Validation Results
             </button>
           }
-          @if (resultDetailsExpandBtnShown) {
-            <button mat-raised-button color=primary (click)="resultDetailsExpandBtnShown = false">
+          @if (localResultDetailsExpanded) {
+            <button mat-raised-button color=primary (click)="localResultDetailsExpanded = false">
               <mat-icon>expand_less</mat-icon> Collapse Validation Results
             </button>
           }
           <span class="content-spacer"></span>
-          @if (exportResultsButtonShown) {
+          @if (exportResultsButtonShown()) {
             <button mat-raised-button (click)="exportValidationResults()" color="accent"
               [disabled]="!(dataSource?.data?.length>0)">
               <mat-icon>folder_zip</mat-icon>
-              {{exportValidationResultsBtnName}}
+              {{exportValidationResultsBtnName()}}
             </button>
           }
         </div>
@@ -264,16 +264,16 @@
           Please select severity level to see the result.
         </div>
       }
-      @if ((!validationResultsExpanded) && exportResultsButtonShown) {
+      @if ((!validationResultsExpanded()) && exportResultsButtonShown()) {
         <div class="padding-top-md box margin-bottom-md">
           <button mat-raised-button (click)="exportValidationResults()" color="accent"
             [disabled]="!(dataSource?.data?.length>0)" class="margin-left-md">
             <mat-icon>folder_zip</mat-icon>
-            {{exportValidationResultsBtnName}}
+            {{exportValidationResultsBtnName()}}
           </button>
         </div>
       }
-      @if (severityLevelsFormControl?.value?.length > 0 && resultDetailsExpandBtnShown) {
+      @if (severityLevelsFormControl?.value?.length > 0 && localResultDetailsExpanded) {
         <table
           mat-table [dataSource]="dataSource" multiTemplateDataRows
           >
@@ -378,15 +378,15 @@
       </div>
       <!-- Resource as returned from the validator. Note that the resource returned from the validator may be
       formatted differently then the resource we sent to the validator. -->
-      @if (resultDetailsExpandBtnShown && apiResponse?.formattedResource) {
+      @if (localResultDetailsExpanded && apiResponse()?.formattedResource) {
         <div class="padding-top-md">
           <div class="line-numbers-response" #numbers>
-            @for (item of apiResponse?.formattedResource?.split('\n'); track item; let i = $index) {
+            @for (item of apiResponse()?.formattedResource?.split('\n'); track item; let i = $index) {
               <div class="numbers-response">{{i + 1}}</div>
             }
           </div>
           <div class="validator-response">
-            @for (item of apiResponse?.formattedResource?.split('\n'); track item; let i = $index) {
+            @for (item of apiResponse()?.formattedResource?.split('\n'); track item; let i = $index) {
               <span>
                 <pre [ngClass]="getLineItemClass(item, i)" class="line-item" [id]="'mark'+ (i+1)">{{item}}</pre>
               </span>

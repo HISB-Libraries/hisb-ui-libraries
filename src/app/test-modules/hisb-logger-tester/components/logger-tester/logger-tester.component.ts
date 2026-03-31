@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, computed, OnInit} from '@angular/core';
 import {LogLine, LoggerService} from "ngx-hisb-logger";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
@@ -13,14 +13,19 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class LoggerTesterComponent implements OnInit{
   form: FormGroup | undefined;
   constructor(private loggerService : LoggerService, private formBuilder: FormBuilder) {}
-  loggerData: LogLine[];
   loggingLevelList = ['info', 'debug', 'warn', 'error'];
 
+  loggerData = computed(() => {
+    const value = this.loggerService.logs();
+    console.log(value);
+    return value;
+  });
+
   ngOnInit(): void {
-    this.loggerService.logStream$.subscribe(value => {
-      console.log(value);
-      this.loggerData = value;
-    });
+    // this.loggerService.logStream$.subscribe(value => {
+    //   console.log(value);
+    //   this.loggerData = value;
+    // });
 
     this.form = this.formBuilder.group({
       message: ["Sample log message", [Validators.required]],

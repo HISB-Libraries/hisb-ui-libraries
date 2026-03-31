@@ -1,26 +1,40 @@
-import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, ElementRef, input, viewChild} from '@angular/core';
 import {LogLine} from "../../modal/log-line";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'ngx-console',
     templateUrl: './ngx-console.component.html',
     styleUrls: ['./ngx-console.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxConsoleComponent implements OnChanges{
-  @ViewChild('terminal') private myScrollContainer: ElementRef;
-  @Input() logs: LogLine[] = [];
+export class NgxConsoleComponent {
+  myScrollContainer = viewChild<ElementRef>('terminal');
 
-  scrollToElement(): void {
-    this.myScrollContainer.nativeElement.scroll({
-      top: this.myScrollContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
+  logs = input<LogLine[]>([]);
+
+  constructor() {
+    // Effect to scroll when logs change
+    effect(() => {
+      const logs = this.logs(); // Track the signal
+      const container = this.myScrollContainer();
+
+      if (container?.nativeElement) {
+        this.scrollToElement();
+      }
     });
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if(this.myScrollContainer?.nativeElement){
-      this.scrollToElement();
+
+  scrollToElement(): void {
+    const container = this.myScrollContainer();
+    if (container?.nativeElement) {
+      container.nativeElement.scroll({
+        top: container.nativeElement.scrollHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
     }
   }
 }

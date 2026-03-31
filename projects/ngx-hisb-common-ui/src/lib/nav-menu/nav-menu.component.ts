@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {OptionConfig} from "./option.config";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -7,7 +7,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 
 import {NavigationEnd, Router, RouterLink} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
-import {BehaviorSubject, filter, take} from "rxjs";
+import {filter, take} from "rxjs";
 
 
 @Component({
@@ -22,44 +22,59 @@ import {BehaviorSubject, filter, take} from "rxjs";
   selector: 'common-nav-menu',
   templateUrl: './nav-menu.component.html',
   standalone: true,
-  styleUrls: ['./nav-menu.component.css']
+  styleUrls: ['./nav-menu.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavMenuComponent implements  OnChanges{
-  @Input() backgroundColor: string = "#646064";
-  @Input() contrastColor: string = "white";
-  @Input() options: OptionConfig = {options: []};
-  currentRoute: string; //We only use this variable to store the current route, it is set in the constructor and user in the ngAfterInit
+export class NavMenuComponent {
+  // Signal inputs
+  backgroundColor = input<string>("#646064");
+  contrastColor = input<string>("white");
+  options = input<OptionConfig>({options: []});
 
-  expanded: boolean = true;
-  selectedOption = 0;
+  // Local state as signals
+  expanded = signal<boolean>(true);
+  selectedOption = signal<number>(0);
+  private currentRouteStr = signal<string>('');
 
-  private currentRouteStr = new BehaviorSubject<string>('');
-  currentRouteStr$ = this.currentRouteStr.asObservable();
+  // Inject dependencies
+  private router = inject(Router);
 
-
-  constructor(private router: Router) {
-    // To grab the router events immediately we need to subscribe to them in the constructor
+  constructor() {
+    // Set initial route on component initialization
     this.setNavMenuInitialRoute();
+
+    // Effect to update selected option when options or route changes
+    effect(() => {
+      const currentRoute = this.currentRouteStr();
+      const opts = this.options();
+
+      if (opts?.options?.length > 0) {
+        const index = opts.options.findIndex(option => option.routerLink === currentRoute);
+        if (index >= 0) {
+          this.selectedOption.set(index);
+        }
+      }
+    });
   }
 
-  toggleSize() {
-    this.expanded = !this.expanded;
+  toggleSize(): void {
+    this.expanded.update(value => !value);
   }
 
-  select(i: number) {
-    this.selectedOption = i;
+  select(i: number): void {
+    this.selectedOption.set(i);
   }
 
-  private setNavMenuInitialRoute(){
+  private setNavMenuInitialRoute(): void {
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd),
       take(1),
     ).subscribe(event => {
-      if(event?.['url']){
-        this.currentRoute = this.extractPath(event?.['url']);
-        this.currentRouteStr.next(this.currentRoute);
+      if (event?.['url']) {
+        const route = this.extractPath(event['url']);
+        this.currentRouteStr.set(route);
       }
-    })
+    });
   }
 
   /**
@@ -67,7 +82,7 @@ export class NavMenuComponent implements  OnChanges{
    * @param inputString
    * @private
    */
-  private extractPath(inputString: string) {
+  private extractPath(inputString: string): string {
     const firstSlashIndex = inputString.indexOf('/');
 
     if (firstSlashIndex === -1) {
@@ -82,15 +97,4 @@ export class NavMenuComponent implements  OnChanges{
       return inputString.substring(firstSlashIndex + 1, secondSlashIndex);
     }
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['options'].currentValue){
-      this.currentRouteStr$.subscribe( currentRoute =>{
-        const index = this.options.options.findIndex(option=> option.routerLink ==currentRoute)
-        if(index >= 0 ){
-          this.selectedOption = index
-        }})
-    }
-  }
-
 }

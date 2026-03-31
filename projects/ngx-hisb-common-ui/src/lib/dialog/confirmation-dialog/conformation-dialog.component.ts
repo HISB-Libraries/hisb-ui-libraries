@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {DialogData} from "../domain/dialog-data";
@@ -11,34 +11,30 @@ import {DialogData} from "../domain/dialog-data";
   imports: [
     MatDialogModule,
     MatButtonModule
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConformationDialogComponent implements OnInit {
+export class ConformationDialogComponent {
 
-  data: DialogData = {};
+  private dialogRef = inject(MatDialogRef<any>);
+  private dialogData = inject<DialogData>(MAT_DIALOG_DATA);
 
-  constructor(
-    private dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) private dialogData: DialogData
-  ) {
-  }
+  data: DialogData = {
+    title: this.dialogData.title ?? "",
+    content: this.dialogData.content ?? "Do you want to continue?",
+    primaryActionBtnTitle: this.dialogData.primaryActionBtnTitle ?? "Yes",
+    secondaryActionBtnTitle: this.dialogData.secondaryActionBtnTitle ?? "No",
+    width: this.dialogData.width ?? '4em',
+    height: this.dialogData.height ?? '4em',
+    isPrimaryButtonLeft: this.dialogData.isPrimaryButtonLeft ?? false
+  };
 
-  onSecondaryClick() {
+  onSecondaryClick(): void {
     this.dialogRef.close('secondaryAction');
   }
 
-  onDefaultClick() {
+  onDefaultClick(): void {
     this.dialogRef.close('primaryAction');
-  }
-
-  ngOnInit(): void {
-    this.data.title = this.dialogData.title ?? "";
-    this.data.content = this.dialogData.content ?? "Do you want to continue?";
-    this.data.primaryActionBtnTitle = this.dialogData.primaryActionBtnTitle ?? "Yes";
-    this.data.secondaryActionBtnTitle = this.dialogData.secondaryActionBtnTitle ?? "No";
-    this.data.width = this.dialogData.width ?? '4em';
-    this.data.height = this.dialogData.width ?? '4em';
-    this.data.isPrimaryButtonLeft = this.dialogData.isPrimaryButtonLeft ?? false;
   }
 }
 
