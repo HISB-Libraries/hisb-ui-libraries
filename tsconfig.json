@@ -28,10 +28,10 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "moduleResolution": "nodeNext",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "NodeNext",
+    "module": "ES2022",
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
