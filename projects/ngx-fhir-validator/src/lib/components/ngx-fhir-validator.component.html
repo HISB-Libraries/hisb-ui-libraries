@@ -42,7 +42,7 @@
 
   <!--Select JSON/XML radio group-->
   @if (validationInputFormat().format == 'xml and json') {
-    <mat-radio-group [(ngModel)]="resourceFormat" [disabled]=isLoading >
+    <mat-radio-group [(ngModel)]="resourceFormat" [disabled]=isLoading aria-label="Select resource format">
       <mat-radio-button
         value="json"
         [checked]="resourceFormat =='json'"
@@ -97,7 +97,8 @@
   <!--File upload widget-->
   <input type="file" class="file-input" (click)="fileUpload.value=null"
     [accept]="validationInputFormat()?.accepts?.toString()"
-    (change)="onFileSelected($event)" #fileUpload>
+    (change)="onFileSelected($event)" #fileUpload
+    aria-label="Select FHIR resource file to upload">
 
   @if (validationInputFormat().format == 'xml and json') {
     <span class="filename">{{fileName}}</span>
@@ -105,7 +106,8 @@
 
   <button mat-raised-button [style.background-color]="buttonBackgroundColor()" [style.color]="buttonTxtColor()"
     class="upload-btn"
-    (click)="clearUI(); fileUpload.click();" [disabled]=isLoading>
+    (click)="clearUI(); fileUpload.click();" [disabled]=isLoading
+    aria-label="Upload FHIR resource file">
     <mat-icon>upload</mat-icon>
     Upload
   </button>
@@ -132,6 +134,7 @@
     [disabled]="isLoading"
     (input)="lineNumbers()"
     (scroll)="numbers.scrollTop = validatorInput.scrollTop"
+    aria-label="FHIR Resource JSON or XML input"
     >
   </textarea>
 </div>
@@ -142,7 +145,8 @@
     @if (submitBtnShown() && (submitBtnAlignment()=='left') && !isLoading) {
       <span>
         <button mat-raised-button [style.background-color]="buttonBackgroundColor()" [style.color]="buttonTxtColor()" class="button"
-          (click)="validateFhirResource(fhirResource, resourceFormat)">
+          (click)="validateFhirResource(fhirResource, resourceFormat)"
+          aria-label="Submit FHIR resource for validation">
           <mat-icon>send</mat-icon>
           Submit
         </button>
@@ -152,7 +156,8 @@
       <button [ngClass]="{'left-margin-spacer': submitBtnAlignment()=='left'}" mat-raised-button
         [style.background-color]="buttonBackgroundColor()" [style.color]="buttonTxtColor()"
         (click)="onFormatInput();"
-        [disabled]="!fhirResource">
+        [disabled]="!fhirResource"
+        aria-label="Format FHIR resource input">
         <mat-icon>code</mat-icon>
         Format Input
       </button>
@@ -172,7 +177,8 @@
     @if (clearValidatorBtnShown() && !isLoading) {
       <button
         mat-raised-button color="success" class="button"
-        (click)="onClear()">
+        (click)="onClear()"
+        aria-label="Clear validator input and results">
         <mat-icon>clear</mat-icon>
         Clear Validator
       </button>
@@ -180,7 +186,8 @@
     @if (submitBtnShown() && (submitBtnAlignment() =='right') && !isLoading) {
       <span class="left-margin-spacer">
         <button mat-raised-button color="accent" class="button"
-          (click)="validateFhirResource(fhirResource, resourceFormat)">
+          (click)="validateFhirResource(fhirResource, resourceFormat)"
+          aria-label="Submit FHIR resource for validation">
           <mat-icon>send</mat-icon>
           {{ submitBtnTitle()}}
         </button>
@@ -192,7 +199,8 @@
 @if (isLoading && cancelValidationBtnShown()) {
   <div class="row-button-wrapper padding-top-md">
     <span class="content-spacer"></span>
-    <button mat-raised-button color="warn" (click)="onCancelValidation()">
+    <button mat-raised-button color="warn" (click)="onCancelValidation()"
+      aria-label="Cancel validation request">
       <mat-icon>cancel</mat-icon>
       Cancel Validation
     </button>
@@ -206,7 +214,7 @@
     <div class="padding-top-md">
       <div (click)="onFilterResults()">
         <mat-button-toggle-group name="severity level filter" [formControl]="severityLevelsFormControl"
-          aria-label="severity level filter" multiple class="full-width">
+          aria-label="Filter validation results by severity level" multiple class="full-width">
           @for (level of severityLevels; track level) {
             <mat-button-toggle
               id="format-toggle-buttons"
@@ -240,19 +248,22 @@
       @if (validationResultsExpanded()) {
         <div class="padding-top-md box">
           @if (!localResultDetailsExpanded) {
-            <button mat-raised-button color=primary (click)="localResultDetailsExpanded = true">
+            <button mat-raised-button color=primary (click)="localResultDetailsExpanded = true"
+              aria-label="Expand validation results details">
               <mat-icon>expand_more</mat-icon> Expand Validation Results
             </button>
           }
           @if (localResultDetailsExpanded) {
-            <button mat-raised-button color=primary (click)="localResultDetailsExpanded = false">
+            <button mat-raised-button color=primary (click)="localResultDetailsExpanded = false"
+              aria-label="Collapse validation results details">
               <mat-icon>expand_less</mat-icon> Collapse Validation Results
             </button>
           }
           <span class="content-spacer"></span>
           @if (exportResultsButtonShown()) {
             <button mat-raised-button (click)="exportValidationResults()" color="accent"
-              [disabled]="!(dataSource?.data?.length>0)">
+              [disabled]="!(dataSource?.data?.length>0)"
+              aria-label="Export validation results as zip file">
               <mat-icon>folder_zip</mat-icon>
               {{exportValidationResultsBtnName()}}
             </button>
@@ -267,7 +278,8 @@
       @if ((!validationResultsExpanded()) && exportResultsButtonShown()) {
         <div class="padding-top-md box margin-bottom-md">
           <button mat-raised-button (click)="exportValidationResults()" color="accent"
-            [disabled]="!(dataSource?.data?.length>0)" class="margin-left-md">
+            [disabled]="!(dataSource?.data?.length>0)" class="margin-left-md"
+            aria-label="Export validation results as zip file">
             <mat-icon>folder_zip</mat-icon>
             {{exportValidationResultsBtnName()}}
           </button>
@@ -276,6 +288,7 @@
       @if (severityLevelsFormControl?.value?.length > 0 && localResultDetailsExpanded) {
         <table
           mat-table [dataSource]="dataSource" multiTemplateDataRows
+          aria-label="FHIR validation results table"
           >
           <!-- First column contains expand/collapse widget. The user can chose to expand/collapse all rows,
           as well as expand/collapse individual rows. Note that the expand/collapse all can be toggled automatically
@@ -284,12 +297,12 @@
           <ng-container matColumnDef="toggle">
             <th mat-header-cell *matHeaderCellDef (click)="toggle()">
               @if (!allExpanded) {
-                <mat-icon class="pointer" matTooltip="Expand All" aria-label="expand all">
+                <mat-icon class="pointer" matTooltip="Expand All" aria-label="Expand all validation results">
                   expand_more
                 </mat-icon>
               }
               @if (allExpanded) {
-                <mat-icon class="pointer" matTooltip="Collapse All" aria-label="collapse all">
+                <mat-icon class="pointer" matTooltip="Collapse All" aria-label="Collapse all validation results">
                   expand_less
                 </mat-icon>
               }
@@ -297,12 +310,12 @@
             <td mat-cell *matCellDef="let validationResultItem" class="pointer"
               (click)="validationResultItem.expanded = !validationResultItem.expanded; checkExpandCollapseAllStatus()">
               @if (!validationResultItem.expanded) {
-                <mat-icon aria-label="expand">
+                <mat-icon aria-label="Expand validation result details">
                   expand_more
                 </mat-icon>
               }
               @if (validationResultItem.expanded) {
-                <mat-icon aria-label="collapse">
+                <mat-icon aria-label="Collapse validation result details">
                   expand_less
                 </mat-icon>
               }
@@ -314,22 +327,26 @@
             <td mat-cell *matCellDef="let validationResultItem">
               @if (validationResultItem.severity === 'Error') {
                 <mat-icon
-                  class="danger-color">error
+                  class="danger-color"
+                  aria-label="Error severity">error
                 </mat-icon>
               }
               @if (validationResultItem.severity === 'Warning') {
                 <mat-icon
-                  class="warning-color">warning
+                  class="warning-color"
+                  aria-label="Warning severity">warning
                 </mat-icon>
               }
               @if (validationResultItem.severity === 'Information') {
                 <mat-icon
-                  class="success-color">info
+                  class="success-color"
+                  aria-label="Information severity">info
                 </mat-icon>
               }
               @if (validationResultItem.severity === 'Note') {
                 <mat-icon
-                  class="md-primary-color">edit_note
+                  class="md-primary-color"
+                  aria-label="Note severity">edit_note
                 </mat-icon>
               }
             </td>
