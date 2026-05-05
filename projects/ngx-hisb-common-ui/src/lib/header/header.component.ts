@@ -3,11 +3,9 @@ import {HeaderConfig} from "./header.config";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
-
 import {MatMenuModule} from "@angular/material/menu";
 import {RouterLink} from "@angular/router";
 import {MatDividerModule} from "@angular/material/divider";
-import {BrowserModule} from "@angular/platform-browser";
 
 @Component({
   imports: [
@@ -16,8 +14,7 @@ import {BrowserModule} from "@angular/platform-browser";
     MatIconModule,
     MatMenuModule,
     RouterLink,
-    MatDividerModule,
-    BrowserModule
+    MatDividerModule
   ],
   selector: 'common-header',
   styleUrls: ['./header.component.css'],

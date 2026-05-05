@@ -1,17 +1,17 @@
 <mat-toolbar class="header">
 
-  <mat-toolbar-row [style.background-color]="backgroundColor">
-    <div class="title" [routerLink]="'/'" [style.cursor]="'pointer'">{{ title }}</div>
+  <mat-toolbar-row [style.background-color]="backgroundColor()">
+    <div class="title" [routerLink]="'/'" [style.cursor]="'pointer'">{{ title() }}</div>
 
     <div class="subtitle">
-      <p [innerHTML]="subtitleInsert">
+      <p [innerHTML]="subtitleInsert()">
       </p>
     </div>
 
     <div class="content-spacer"></div>
-    @if (version) {
+    @if (version()) {
       <div class="version-label">
-        Version: {{ version }}
+        Version: {{ version() }}
       </div>
     }
     @if (configuration()?.menuItem) {
@@ -22,7 +22,7 @@
       </div>
     }
     <div>
-      @if (showUserManagement) {
+      @if (showUserManagement()) {
         <button mat-icon-button aria-label="User Management">
           <mat-icon>account_circle</mat-icon>
         </button>
@@ -45,24 +45,3 @@
     }
   </mat-menu>
 </mat-toolbar>
-
-
-
-<!--&lt;!&ndash; Add links to major features as they are implemented here. &ndash;&gt;-->
-
-
-
-
-<!--<mat-menu #menu="matMenu">-->
-<!--  <button mat-menu-item onclick="window.open('https://ravendocs.readthedocs.io/en/latest/','_blank')">-->
-<!--    <span>Documentation</span>-->
-<!--  </button>-->
-<!--  <button mat-menu-item onclick="window.open('https://github.com/MortalityReporting','_blank')">-->
-<!--    <span>Mortality Reporting GitHub</span>-->
-<!--  </button>-->
-<!--  <mat-divider></mat-divider>-->
-<!--  <button mat-menu-item onclick="window.open('https://chat.fhir.org','_blank')">-->
-<!--    <span>FHIR Zulip Chat</span>-->
-<!--  </button>-->
-<!--</mat-menu>-->
-

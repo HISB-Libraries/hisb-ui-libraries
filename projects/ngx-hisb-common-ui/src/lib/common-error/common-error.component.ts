@@ -1,12 +1,10 @@
 import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
-import {BrowserModule} from "@angular/platform-browser";
 
 @Component({
   standalone: true,
   imports: [
-    MatButtonModule,
-    BrowserModule
+    MatButtonModule
   ],
   selector: 'lib-common-error',
   templateUrl: './common-error.component.html',

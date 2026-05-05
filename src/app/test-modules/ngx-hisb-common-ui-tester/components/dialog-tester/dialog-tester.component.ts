@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import {JsonValidator, openTextInputDialog, ResourceTypeValidator} from "ngx-hisb-common-ui";
 import {Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-dialog-tester',
     templateUrl: './dialog-tester.component.html',
     styleUrls: ['./dialog-tester.component.scss'],
-    standalone: false
+    imports: [MatButton]
 })
 export class DialogTesterComponent {
   constructor(

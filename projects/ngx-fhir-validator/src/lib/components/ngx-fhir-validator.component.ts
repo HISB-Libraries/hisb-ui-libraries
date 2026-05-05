@@ -8,8 +8,8 @@ import {
   ViewChild
 } from '@angular/core';
 import {ValidatorConstants} from "../providers/validator-constants";
-import {FormControl, FormGroup, UntypedFormControl, Validators} from "@angular/forms";
-import {MatTableDataSource} from "@angular/material/table";
+import { FormControl, FormGroup, UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from "@angular/material/table";
 import {FhirValidatorService} from "../services/fhir-validator.service";
 import {ResponseItem} from "../modal/response-item";
 import {ValidationResults} from "../modal/validation-results";
@@ -17,6 +17,17 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ApiResponse} from "../modal/api-response";
 import {ValidatorInput} from "../modal/validator-input-format";
 import {ImplementationGuide} from "../modal/implementation-guide";
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { NgStyle, NgClass, TitleCasePipe } from '@angular/common';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTooltip } from '@angular/material/tooltip';
 
 export type SubmitButtonAlignment = 'left' | 'right';
 @Component({
@@ -30,7 +41,7 @@ export type SubmitButtonAlignment = 'left' | 'right';
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
     ],
-    standalone: false
+    imports: [MatProgressSpinner, MatCardHeader, MatCardTitle, MatButton, MatIcon, MatRadioGroup, ReactiveFormsModule, FormsModule, MatRadioButton, MatFormField, MatLabel, MatSelect, MatOption, MatError, NgStyle, NgClass, MatButtonToggleGroup, MatButtonToggle, MatCheckbox, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatTooltip, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TitleCasePipe]
 })
 
 
