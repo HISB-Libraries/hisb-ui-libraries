@@ -1,13 +1,17 @@
 import {Component, computed, OnInit} from '@angular/core';
-import {LogLine, LoggerService} from "ngx-hisb-logger";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { LogLine, LoggerService, NgxConsoleComponent } from "ngx-hisb-logger";
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatFormField, MatLabel, MatInput, MatError } from '@angular/material/input';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { MatButton } from '@angular/material/button';
 
 
 @Component({
     selector: 'app-logger-tester',
     templateUrl: './logger-tester.component.html',
     styleUrls: ['./logger-tester.component.scss'],
-    standalone: false
+    imports: [MatCard, MatCardContent, NgxConsoleComponent, MatCardHeader, MatCardTitle, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatSelect, MatOption, MatButton]
 })
 
 export class LoggerTesterComponent implements OnInit{

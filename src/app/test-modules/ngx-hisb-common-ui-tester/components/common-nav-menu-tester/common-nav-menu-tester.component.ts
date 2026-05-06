@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {OptionConfig} from "ngx-hisb-common-ui";
+import { OptionConfig, NavMenuComponent } from "ngx-hisb-common-ui";
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ActivatedRoute} from "@angular/router";
@@ -84,7 +84,7 @@ class Module {
     selector: 'app-common-nav-menu-tester',
     templateUrl: './common-nav-menu-tester.component.html',
     styleUrl: './common-nav-menu-tester.component.scss',
-    standalone: false
+    imports: [NavMenuComponent]
 })
 export class CommonNavMenuTesterComponent implements OnInit{
   optionConfig: OptionConfig;

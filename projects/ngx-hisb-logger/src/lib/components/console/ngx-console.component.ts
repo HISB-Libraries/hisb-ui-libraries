@@ -1,13 +1,16 @@
 import {ChangeDetectionStrategy, Component, effect, ElementRef, input, viewChild} from '@angular/core';
 import {LogLine} from "../../modal/log-line";
-import {CommonModule} from "@angular/common";
+import {DatePipe, NgClass} from "@angular/common";
 
 @Component({
     selector: 'ngx-console',
     templateUrl: './ngx-console.component.html',
     styleUrls: ['./ngx-console.component.css'],
     standalone: true,
-    imports: [CommonModule],
+  imports: [
+    DatePipe,
+    NgClass
+  ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxConsoleComponent {

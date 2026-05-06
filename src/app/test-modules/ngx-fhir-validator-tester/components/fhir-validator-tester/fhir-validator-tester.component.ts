@@ -1,13 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {ValidationResults, ValidatorInput} from "ngx-fhir-validator";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import { ValidationResults, ValidatorInput, NgxFhirValidatorComponent } from "ngx-fhir-validator";
+import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 
 
 @Component({
     selector: 'app-fhir-validator-tester',
     templateUrl: './fhir-validator-tester.component.html',
     styleUrls: ['./fhir-validator-tester.component.scss'],
-    standalone: false
+    imports: [MatCard, MatCardContent, NgxFhirValidatorComponent, MatCardHeader, MatCardTitle, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatCheckbox, MatRadioGroup, MatRadioButton]
 })
 
 export class FhirValidatorTesterComponent implements  OnInit {
